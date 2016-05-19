@@ -1,0 +1,23 @@
+
+
+
+<form action="<%= session_url %>" method="post">
+  <%= auth_token_input %>
+    <input type="text"
+            name="user[username]"
+            class="login_username"
+            placeholder='Username'
+            value="">
+    <div class="bottom_pad"></div>
+    <input type="password"
+             name="user[password]"
+             placeholder='Password'
+             value=""
+             class="bottom_pad">
+    <div class="bottom_pad"></div>
+    <input type="submit" value="Sign In!" class="login" >
+    <div class="bottom_pad"></div>
+    <div class="bottom_pad"></div>
+    <div class="bottom_pad"></div>
+    <div class="bottom_pad"></div>
+</form>
