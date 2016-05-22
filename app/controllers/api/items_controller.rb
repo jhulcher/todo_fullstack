@@ -8,8 +8,8 @@ class Api::ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.user_id = current_user.id
-    
-    if current_user.items
+
+    if current_user.items.count > 0
       @item.rank = current_user.items.last.rank + 1
     else
       @item.rank = 0
