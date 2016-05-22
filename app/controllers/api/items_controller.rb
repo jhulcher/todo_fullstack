@@ -8,7 +8,13 @@ class Api::ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.user_id = current_user.id
-    @item.rank = current_user.items.last.rank + 1
+    
+    if current_user.items
+      @item.rank = current_user.items.last.rank + 1
+    else
+      @item.rank = 0
+    end
+
     @item.save!
     # return new set of items
     @items = current_user.items.where(finished: false).sort_by { |x| x.rank }
