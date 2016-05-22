@@ -3,6 +3,13 @@ class Api::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+
+    @items = @user.items.where(finished: true)
+    @items = @items.sort_by { |x| x.updated_at }.reverse
+  end
+
+  def index
+    @users = User.all
   end
 
   private

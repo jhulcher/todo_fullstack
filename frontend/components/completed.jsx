@@ -5,7 +5,7 @@ var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 var cur = window.current_user_id;
 
-var User = React.createClass({
+var Completed = React.createClass({
 
   mixins: [LinkedStateMixin],
 
@@ -14,7 +14,7 @@ var User = React.createClass({
   },
 
   handleUserClick: function () {
-    this.context.router.push( "completed" );
+    this.context.router.push( "" );
   },
 
   handleLogOut: function () {
@@ -23,15 +23,15 @@ var User = React.createClass({
 
   getInitialState: function () {
     return (
-        { items: [], inputValue: "" }
+      { items: [] }
     );
   },
 
   componentWillMount: function () {
-    ApiUtil.fetchUser(cur);
+    ApiUtil.fetchCompleted(cur);
 
     this.listener = UserStore.addListener(function () {
-      this.setState({ items: UserStore.all() });
+      this.setState({ items: UserStore.all() })
     }.bind(this));
   },
 
@@ -39,25 +39,15 @@ var User = React.createClass({
     this.listener.remove();
   },
 
-  handleCreate: function (e) {
-    e.preventDefault();
-    ApiUtil.createItem(this.state.inputValue);
-    this.setState({inputValue: ""});
-  },
-
-  handleDelete: function (id) {
-    ApiUtil.finishItem(id);
-  },
-
-  onChange: function (e) {
-    this.setState({inputValue: e.target.value});
+  handleUnfinish: function (id) {
+    ApiUtil.unfinishItem(id);
   },
 
   render: function () {
     return (
       <ol>
         <div onClick={ this.handleUserClick } >
-          See your Accomplishments!
+          Head back to your List...
         </div>
         <div onClick={ this.handleLogOut } >
           Log Out
@@ -68,7 +58,7 @@ var User = React.createClass({
               return (
                 <div key={idx}>
                   <p>
-                    You have work to do, {
+                    You have done so much, {
                       item.username[0].toUpperCase()
                       + item.username.slice(1)
                     }!
@@ -76,7 +66,7 @@ var User = React.createClass({
                   <li key={idx}>
                     { item.body }
                     <div className=""
-                       onClick={this.handleDelete.bind(
+                       onClick={this.handleUnfinish.bind(
                           null,
                           item.item_id)}>
                       X
@@ -87,7 +77,7 @@ var User = React.createClass({
             } else if (item.body === null) {
               return (
                 <p key={idx}>
-                  You have work to do, {
+                  You have done so much, {
                     item.username[0].toUpperCase()
                     + item.username.slice(1)
                   }!
@@ -98,7 +88,7 @@ var User = React.createClass({
                 <li key={idx}>
                   { item.body }
                   <div className=""
-                     onClick={this.handleDelete.bind(
+                     onClick={this.handleUnfinish.bind(
                         null,
                         item.item_id)}>
                     X
@@ -108,22 +98,10 @@ var User = React.createClass({
             }
           }.bind(this))
         }
-        <div>
-          <form onSubmit={this.handleCreate}>
-            <input type="text"
-              maxLength="30"
-              className=""
-              placeholder="..."
-              value={this.state.inputValue}
-              onChange={this.onChange}
-            />
-          </form>
-        </div>
       </ol>
     );
   }
+
 });
 
-window.User = User;
-
-module.exports = User;
+module.exports = Completed;

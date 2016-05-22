@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Todo</title>
-  <!-- <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %> -->
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <!-- <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %> -->
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -12,9 +12,6 @@
     <script type="text/javascript">
       window.current_user_id = <%= current_user.id %>;
     </script>
-    <center>
-      <%= link_to "LOGOUT", session_url, method: :delete %>
-    </center>
   <% end %>
 
   <center>

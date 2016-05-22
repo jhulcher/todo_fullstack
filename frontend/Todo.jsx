@@ -1,6 +1,7 @@
 var React = require("react");
 var ReactDom = require("react-dom");
 var ReactRouter = require("react-router");
+var Completed = require("./components/completed.jsx")
 
 var User = require("./components/user.jsx");
 
@@ -23,6 +24,7 @@ var App = React.createClass({
 var Routes = (
   <Route path="/" component={ App }>
     <IndexRoute component={ User } />
+    <Route path="completed" component={ Completed } />
   </Route>
 );
 

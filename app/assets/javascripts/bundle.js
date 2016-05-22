@@ -47,8 +47,9 @@
 	var React = __webpack_require__(1);
 	var ReactDom = __webpack_require__(33);
 	var ReactRouter = __webpack_require__(168);
+	var Completed = __webpack_require__(231);
 	
-	var User = __webpack_require__(231);
+	var User = __webpack_require__(261);
 	
 	var ApiUtil = __webpack_require__(232);
 	
@@ -71,7 +72,8 @@
 	var Routes = React.createElement(
 	  Route,
 	  { path: "/", component: App },
-	  React.createElement(IndexRoute, { component: User })
+	  React.createElement(IndexRoute, { component: User }),
+	  React.createElement(Route, { path: "completed", component: Completed })
 	);
 	
 	ReactDom.render(React.createElement(
@@ -25814,18 +25816,30 @@
 	
 	var cur = window.current_user_id;
 	
-	var User = React.createClass({
-	  displayName: "User",
+	var Completed = React.createClass({
+	  displayName: "Completed",
 	
 	
 	  mixins: [LinkedStateMixin],
 	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  handleUserClick: function () {
+	    this.context.router.push("");
+	  },
+	
+	  handleLogOut: function () {
+	    ApiUtil.logOut();
+	  },
+	
 	  getInitialState: function () {
-	    return { items: [], inputValue: "" };
+	    return { items: [] };
 	  },
 	
 	  componentWillMount: function () {
-	    ApiUtil.fetchUser(cur);
+	    ApiUtil.fetchCompleted(cur);
 	
 	    this.listener = UserStore.addListener(function () {
 	      this.setState({ items: UserStore.all() });
@@ -25836,24 +25850,24 @@
 	    this.listener.remove();
 	  },
 	
-	  handleCreate: function (e) {
-	    e.preventDefault();
-	    ApiUtil.createItem(this.state.inputValue);
-	    this.setState({ inputValue: "" });
-	  },
-	
-	  handleDelete: function (id) {
-	    ApiUtil.deleteItem(id);
-	  },
-	
-	  onChange: function (e) {
-	    this.setState({ inputValue: e.target.value });
+	  handleUnfinish: function (id) {
+	    ApiUtil.unfinishItem(id);
 	  },
 	
 	  render: function () {
 	    return React.createElement(
 	      "ol",
 	      null,
+	      React.createElement(
+	        "div",
+	        { onClick: this.handleUserClick },
+	        "Head back to your List..."
+	      ),
+	      React.createElement(
+	        "div",
+	        { onClick: this.handleLogOut },
+	        "Log Out"
+	      ),
 	      this.state.items.map(function (item, idx) {
 	        if (item.body !== null && idx === 0) {
 	          return React.createElement(
@@ -25862,7 +25876,7 @@
 	            React.createElement(
 	              "p",
 	              null,
-	              "You have work to do, ",
+	              "You have done so much, ",
 	              item.username[0].toUpperCase() + item.username.slice(1),
 	              "!"
 	            ),
@@ -25873,7 +25887,7 @@
 	              React.createElement(
 	                "div",
 	                { className: "",
-	                  onClick: this.handleDelete.bind(null, item.item_id) },
+	                  onClick: this.handleUnfinish.bind(null, item.item_id) },
 	                "X"
 	              )
 	            )
@@ -25882,7 +25896,7 @@
 	          return React.createElement(
 	            "p",
 	            { key: idx },
-	            "You have work to do, ",
+	            "You have done so much, ",
 	            item.username[0].toUpperCase() + item.username.slice(1),
 	            "!"
 	          );
@@ -25894,34 +25908,18 @@
 	            React.createElement(
 	              "div",
 	              { className: "",
-	                onClick: this.handleDelete.bind(null, item.item_id) },
+	                onClick: this.handleUnfinish.bind(null, item.item_id) },
 	              "X"
 	            )
 	          );
 	        }
-	      }.bind(this)),
-	      React.createElement(
-	        "div",
-	        null,
-	        React.createElement(
-	          "form",
-	          { onSubmit: this.handleCreate },
-	          React.createElement("input", { type: "text",
-	            maxLength: "30",
-	            className: "",
-	            placeholder: "...",
-	            value: this.state.inputValue,
-	            onChange: this.onChange
-	          })
-	        )
-	      )
+	      }.bind(this))
 	    );
 	  }
+	
 	});
 	
-	window.User = User;
-	
-	module.exports = User;
+	module.exports = Completed;
 
 /***/ },
 /* 232 */
@@ -25935,7 +25933,19 @@
 	
 	  fetchUser: function (id) {
 	    $.ajax({
-	      url: "/api/users/" + id,
+	      url: "/api/items",
+	      method: "GET",
+	      dataType: "json",
+	      success: function (response) {
+	        ApiActions.receiveUser(response);
+	        UserStore.all();
+	      }
+	    });
+	  },
+	
+	  fetchCompleted: function (id) {
+	    $.ajax({
+	      url: "api/users/" + id,
 	      method: "GET",
 	      dataType: "json",
 	      success: function (response) {
@@ -25962,14 +25972,46 @@
 	    });
 	  },
 	
-	  deleteItem: function (id) {
+	  finishItem: function (id) {
 	    $.ajax({
 	      url: "api/items/" + id,
-	      method: "DELETE",
+	      method: "PATCH",
 	      dataType: "json",
+	      data: {
+	        item: {
+	          finished: true
+	        }
+	      },
 	      success: function (response) {
 	        ApiActions.receiveUser(response);
 	        UserStore.all();
+	      }
+	    });
+	  },
+	
+	  unfinishItem: function (id) {
+	    $.ajax({
+	      url: "api/items/" + id,
+	      method: "PATCH",
+	      dataType: "json",
+	      data: {
+	        item: {
+	          finished: false
+	        }
+	      },
+	      success: function (response) {
+	        ApiActions.receiveUser(response);
+	        UserStore.all();
+	      }
+	    });
+	  },
+	
+	  logOut: function () {
+	    $.ajax({
+	      url: "session",
+	      method: "DELETE",
+	      success: function (response) {
+	        window.location.href = "/";
 	      }
 	    });
 	  }
@@ -25990,7 +26032,6 @@
 	var ApiActions = {
 	
 	  receiveUser: function (user) {
-	    console.log("receive user");
 	    AppDispatcher.dispatch({
 	      actionType: Constants.USER_RECEIVED,
 	      user: user
@@ -33036,6 +33077,148 @@
 	};
 	
 	module.exports = ReactStateSetters;
+
+/***/ },
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiUtil = __webpack_require__(232);
+	var UserStore = __webpack_require__(239);
+	var React = __webpack_require__(1);
+	var LinkedStateMixin = __webpack_require__(257);
+	
+	var cur = window.current_user_id;
+	
+	var User = React.createClass({
+	  displayName: "User",
+	
+	
+	  mixins: [LinkedStateMixin],
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  handleUserClick: function () {
+	    this.context.router.push("completed");
+	  },
+	
+	  handleLogOut: function () {
+	    ApiUtil.logOut();
+	  },
+	
+	  getInitialState: function () {
+	    return { items: [], inputValue: "" };
+	  },
+	
+	  componentWillMount: function () {
+	    ApiUtil.fetchUser(cur);
+	
+	    this.listener = UserStore.addListener(function () {
+	      this.setState({ items: UserStore.all() });
+	    }.bind(this));
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
+	  },
+	
+	  handleCreate: function (e) {
+	    e.preventDefault();
+	    ApiUtil.createItem(this.state.inputValue);
+	    this.setState({ inputValue: "" });
+	  },
+	
+	  handleDelete: function (id) {
+	    ApiUtil.finishItem(id);
+	  },
+	
+	  onChange: function (e) {
+	    this.setState({ inputValue: e.target.value });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "ol",
+	      null,
+	      React.createElement(
+	        "div",
+	        { onClick: this.handleUserClick },
+	        "See your Accomplishments!"
+	      ),
+	      React.createElement(
+	        "div",
+	        { onClick: this.handleLogOut },
+	        "Log Out"
+	      ),
+	      this.state.items.map(function (item, idx) {
+	        if (item.body !== null && idx === 0) {
+	          return React.createElement(
+	            "div",
+	            { key: idx },
+	            React.createElement(
+	              "p",
+	              null,
+	              "You have work to do, ",
+	              item.username[0].toUpperCase() + item.username.slice(1),
+	              "!"
+	            ),
+	            React.createElement(
+	              "li",
+	              { key: idx },
+	              item.body,
+	              React.createElement(
+	                "div",
+	                { className: "",
+	                  onClick: this.handleDelete.bind(null, item.item_id) },
+	                "X"
+	              )
+	            )
+	          );
+	        } else if (item.body === null) {
+	          return React.createElement(
+	            "p",
+	            { key: idx },
+	            "You have work to do, ",
+	            item.username[0].toUpperCase() + item.username.slice(1),
+	            "!"
+	          );
+	        } else {
+	          return React.createElement(
+	            "li",
+	            { key: idx },
+	            item.body,
+	            React.createElement(
+	              "div",
+	              { className: "",
+	                onClick: this.handleDelete.bind(null, item.item_id) },
+	              "X"
+	            )
+	          );
+	        }
+	      }.bind(this)),
+	      React.createElement(
+	        "div",
+	        null,
+	        React.createElement(
+	          "form",
+	          { onSubmit: this.handleCreate },
+	          React.createElement("input", { type: "text",
+	            maxLength: "30",
+	            className: "",
+	            placeholder: "...",
+	            value: this.state.inputValue,
+	            onChange: this.onChange
+	          })
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	window.User = User;
+	
+	module.exports = User;
 
 /***/ }
 /******/ ]);

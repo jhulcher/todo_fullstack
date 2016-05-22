@@ -6,7 +6,19 @@ var ApiUtil = {
 
   fetchUser: function (id) {
     $.ajax({
-      url: "/api/users/" + id,
+      url: "/api/items",
+      method: "GET",
+      dataType: "json",
+      success: function (response) {
+        ApiActions.receiveUser(response);
+        UserStore.all();
+      }
+    });
+  },
+
+  fetchCompleted: function (id) {
+    $.ajax({
+      url: "api/users/" + id,
       method: "GET",
       dataType: "json",
       success: function (response) {
@@ -33,14 +45,46 @@ var ApiUtil = {
     });
   },
 
-  deleteItem: function (id) {
+  finishItem: function (id) {
     $.ajax({
       url: "api/items/" + id,
-      method: "DELETE",
+      method: "PATCH",
       dataType: "json",
+      data: {
+        item: {
+          finished: true
+        }
+      },
       success: function (response) {
         ApiActions.receiveUser(response);
         UserStore.all();
+      }
+    });
+  },
+
+  unfinishItem: function (id) {
+    $.ajax({
+      url: "api/items/" + id,
+      method: "PATCH",
+      dataType: "json",
+      data: {
+        item: {
+          finished: false
+        }
+      },
+      success: function (response) {
+        ApiActions.receiveUser(response);
+        UserStore.all();
+      }
+    });
+  },
+
+  logOut: function () {
+    $.ajax({
+      url: "session",
+      method: "DELETE",
+      success: function (response) {
+        window.location.href = "/";
       }
     });
   }
