@@ -2,7 +2,7 @@ class Api::ItemsController < ApplicationController
   before_filter :require_signed_in!
 
   def index
-    @items = Item.all
+    @items = current_user.items
   end
 
   # def show
@@ -13,13 +13,15 @@ class Api::ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item.user_id = current_user.id
     @item.save!
-    # render json: {}
+    # return new set of items
+    @items = current_user.items
   end
 
   def destroy
     @item = Item.find(params[:id])
     @item.destroy!
-    render json: {}
+    # return new set of items
+    @items = current_user.items
   end
 
   private

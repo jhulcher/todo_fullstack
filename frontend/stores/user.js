@@ -20,7 +20,11 @@ UserStore.__onDispatch = function (payLoad) {
 };
 
 UserStore.all = function () {
-  return _user.slice(0);
+  if (Array.isArray(_user) === true) {
+    return _user;
+  } else {
+    return [_user];
+  }
 };
 
 window.UserStore = UserStore;
