@@ -6,7 +6,7 @@ var ApiUtil = {
 
   fetchUser: function (id) {
     $.ajax({
-      url: "/api/items",
+      url: "api/items",
       method: "GET",
       dataType: "json",
       success: function (response) {
@@ -30,7 +30,7 @@ var ApiUtil = {
 
   createItem: function (body) {
     $.ajax({
-      url: "/api/items",
+      url: "api/items",
       method: "POST",
       dataType: "json",
       data: {

@@ -25933,7 +25933,7 @@
 	
 	  fetchUser: function (id) {
 	    $.ajax({
-	      url: "/api/items",
+	      url: "api/items",
 	      method: "GET",
 	      dataType: "json",
 	      success: function (response) {
@@ -25957,7 +25957,7 @@
 	
 	  createItem: function (body) {
 	    $.ajax({
-	      url: "/api/items",
+	      url: "api/items",
 	      method: "POST",
 	      dataType: "json",
 	      data: {
