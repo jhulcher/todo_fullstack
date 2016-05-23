@@ -25827,7 +25827,7 @@
 	  },
 	
 	  handleUserClick: function () {
-	    this.context.router.push("");
+	    this.context.router.push("/");
 	  },
 	
 	  handleLogOut: function () {
@@ -25855,8 +25855,9 @@
 	  },
 	
 	  render: function () {
+	
 	    return React.createElement(
-	      "ol",
+	      "ul",
 	      null,
 	      React.createElement(
 	        "div",
@@ -25903,7 +25904,7 @@
 	        } else {
 	          return React.createElement(
 	            "li",
-	            { key: idx },
+	            { key: idx, id: item.id },
 	            item.body,
 	            React.createElement(
 	              "div",
@@ -25997,6 +25998,36 @@
 	      data: {
 	        item: {
 	          finished: false
+	        }
+	      },
+	      success: function (response) {
+	        ApiActions.receiveUser(response);
+	        UserStore.all();
+	      }
+	    });
+	  },
+	
+	  changeRank1: function (id, rank) {
+	    $.ajax({
+	      url: "/api/items/" + id,
+	      method: "PATCH",
+	      dataType: "json",
+	      data: {
+	        item: {
+	          rank: rank
+	        }
+	      }
+	    });
+	  },
+	
+	  changeRank: function (id, rank) {
+	    $.ajax({
+	      url: "/api/items/" + id,
+	      method: "PATCH",
+	      dataType: "json",
+	      data: {
+	        item: {
+	          rank: rank
 	        }
 	      },
 	      success: function (response) {
@@ -33152,20 +33183,19 @@
 	        "Log Out"
 	      ),
 	      this.state.items.map(function (item, idx) {
+	        // console.log(item.item_id);
 	        if (item.body !== null && idx === 0) {
-	          return React.createElement(
-	            "div",
-	            { key: idx },
-	            React.createElement(
-	              "p",
-	              null,
-	              "You have work to do, ",
-	              item.username[0].toUpperCase() + item.username.slice(1),
-	              "!"
-	            ),
+	          return(
+	            // <div key={idx}>
+	            //   <p>
+	            //     You have work to do, {
+	            //       item.username[0].toUpperCase()
+	            //       + item.username.slice(1)
+	            //     }!
+	            //   </p>
 	            React.createElement(
 	              "li",
-	              { key: idx },
+	              { key: idx, id: item.item_id },
 	              item.body,
 	              React.createElement(
 	                "div",
@@ -33174,28 +33204,30 @@
 	                "X"
 	              )
 	            )
+	            // </div>
+	
 	          );
 	        } else if (item.body === null) {
-	          return React.createElement(
-	            "p",
-	            { key: idx },
-	            "You have work to do, ",
-	            item.username[0].toUpperCase() + item.username.slice(1),
-	            "!"
-	          );
-	        } else {
-	          return React.createElement(
-	            "li",
-	            { key: idx },
-	            item.body,
-	            React.createElement(
-	              "div",
-	              { className: "",
-	                onClick: this.handleDelete.bind(null, item.item_id) },
-	              "X"
-	            )
-	          );
-	        }
+	            return React.createElement(
+	              "p",
+	              { key: idx },
+	              "You have work to do, ",
+	              item.username[0].toUpperCase() + item.username.slice(1),
+	              "!"
+	            );
+	          } else {
+	            return React.createElement(
+	              "li",
+	              { key: idx, id: item.item_id },
+	              item.body,
+	              React.createElement(
+	                "div",
+	                { className: "",
+	                  onClick: this.handleDelete.bind(null, item.item_id) },
+	                "X"
+	              )
+	            );
+	          }
 	      }.bind(this)),
 	      React.createElement(
 	        "div",
@@ -33211,6 +33243,11 @@
 	            onChange: this.onChange
 	          })
 	        )
+	      ),
+	      React.createElement(
+	        "button",
+	        null,
+	        "Click to Save Order"
 	      )
 	    );
 	  }

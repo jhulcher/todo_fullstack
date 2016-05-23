@@ -25,6 +25,9 @@ class Api::ItemsController < ApplicationController
 
     if params[:item][:rank]
       @item.rank = params[:item][:rank]
+      @item.save!
+      return @items = current_user.items.where(finished: false).sort_by { |x| x.rank }
+
     end
 
     if params[:item][:finished]
@@ -36,6 +39,8 @@ class Api::ItemsController < ApplicationController
     if @item.finished
       @items = current_user.items.where(finished: false).sort_by { |x| x.rank }
     else
+      @item.rank = current_user.items.count + 1
+      @item.save!
       @items = current_user.items.where(finished: true)
       @items = @items.sort_by { |x| x.updated_at }.reverse
     end

@@ -14,7 +14,7 @@ var Completed = React.createClass({
   },
 
   handleUserClick: function () {
-    this.context.router.push( "" );
+    this.context.router.push( "/" );
   },
 
   handleLogOut: function () {
@@ -44,8 +44,9 @@ var Completed = React.createClass({
   },
 
   render: function () {
+
     return (
-      <ol>
+      <ul>
         <div onClick={ this.handleUserClick } >
           Head back to your List...
         </div>
@@ -85,7 +86,7 @@ var Completed = React.createClass({
               );
             } else {
               return (
-                <li key={idx}>
+                <li key={idx} id={item.id}>
                   { item.body }
                   <div className=""
                      onClick={this.handleUnfinish.bind(
@@ -98,7 +99,7 @@ var Completed = React.createClass({
             }
           }.bind(this))
         }
-      </ol>
+      </ul>
     );
   }
 

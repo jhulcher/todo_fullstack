@@ -13,7 +13,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules|bower_components/,
+        exclude: /(node_modules|bower_component)/,
         loader: 'babel',
         query: {
           presets: ['react']
@@ -21,13 +21,6 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    })
-  ],
     devtool: 'source-map',
     resolve: {
       extensions: ["", ".js", ".jsx"]

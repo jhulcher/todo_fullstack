@@ -2,11 +2,18 @@
 <html>
 <head>
   <title>Todo</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <!-- <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %> -->
   <!-- <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %> -->
   <%= csrf_meta_tags %>
+  <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js">
+  </script>
+  <script
+    src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js">
+  </script>
 </head>
 <body>
+
 
   <% if signed_in? %>
     <script type="text/javascript">
@@ -14,10 +21,31 @@
     </script>
   <% end %>
 
+  <script type="text/javascript">
+    jQuery(function ($) {
+
+      $("ol").sortable();
+
+      $(document).on("click", "button", function () {
+
+        $("ol > li").each(function (idx) {
+          if (parseInt(this.id, 10) == this.id) {
+            // console.log(
+            //   parseInt(this.id, 10) + " " + $(this).text() + " " + idx);
+            ApiUtil.changeRank1(parseInt(this.id, 10), idx);
+          }
+        });
+      });
+
+    });
+
+  </script>
+
   <center>
     <%= render "layouts/errors" %>
     <%= yield %>
   </center>
+
 
 </body>
 </html>

@@ -33,6 +33,7 @@ var User = React.createClass({
     this.listener = UserStore.addListener(function () {
       this.setState({ items: UserStore.all() });
     }.bind(this));
+
   },
 
   componentWillUnmount: function () {
@@ -64,16 +65,17 @@ var User = React.createClass({
         </div>
         {
           this.state.items.map (function (item, idx) {
+            // console.log(item.item_id);
             if (item.body !== null && idx === 0) {
               return (
-                <div key={idx}>
-                  <p>
-                    You have work to do, {
-                      item.username[0].toUpperCase()
-                      + item.username.slice(1)
-                    }!
-                  </p>
-                  <li key={idx}>
+                // <div key={idx}>
+                //   <p>
+                //     You have work to do, {
+                //       item.username[0].toUpperCase()
+                //       + item.username.slice(1)
+                //     }!
+                //   </p>
+                  <li key={idx} id={ item.item_id }>
                     { item.body }
                     <div className=""
                        onClick={this.handleDelete.bind(
@@ -82,7 +84,7 @@ var User = React.createClass({
                       X
                     </div>
                   </li>
-                </div>
+                // </div>
               );
             } else if (item.body === null) {
               return (
@@ -95,7 +97,7 @@ var User = React.createClass({
               );
             } else {
               return (
-                <li key={idx}>
+                <li key={idx} id={ item.item_id }>
                   { item.body }
                   <div className=""
                      onClick={this.handleDelete.bind(
@@ -119,6 +121,7 @@ var User = React.createClass({
             />
           </form>
         </div>
+        <button>Click to Save Order</button>
       </ol>
     );
   }

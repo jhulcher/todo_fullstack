@@ -79,6 +79,36 @@ var ApiUtil = {
     });
   },
 
+  changeRank1: function (id, rank) {
+    $.ajax({
+      url: "/api/items/" + id,
+      method: "PATCH",
+      dataType: "json",
+      data: {
+        item: {
+          rank: rank
+        }
+      }
+    });
+  },
+
+  changeRank: function (id, rank) {
+    $.ajax({
+      url: "/api/items/" + id,
+      method: "PATCH",
+      dataType: "json",
+      data: {
+        item: {
+          rank: rank
+        }
+      },
+      success: function (response) {
+        ApiActions.receiveUser(response);
+        UserStore.all();
+      }
+    });
+  },
+
   logOut: function () {
     $.ajax({
       url: "session",
@@ -87,7 +117,7 @@ var ApiUtil = {
         window.location.href = "/";
       }
     });
-  }
+  },
 
 };
 
