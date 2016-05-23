@@ -10,7 +10,7 @@ class Api::ItemsController < ApplicationController
     @item.user_id = current_user.id
 
     if current_user.items.count > 0
-      @item.rank = current_user.items.last.rank + 1
+      @item.rank = current_user.items.where(finished: false).count + 1
     else
       @item.rank = 0
     end

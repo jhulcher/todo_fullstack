@@ -26016,7 +26016,8 @@
 	        item: {
 	          rank: rank
 	        }
-	      }
+	      },
+	      success: function (response) {}
 	    });
 	  },
 	
@@ -26036,6 +26037,8 @@
 	      }
 	    });
 	  },
+	
+	  changeRanks: function () {},
 	
 	  logOut: function () {
 	    $.ajax({
@@ -33148,6 +33151,17 @@
 	    this.listener = UserStore.addListener(function () {
 	      this.setState({ items: UserStore.all() });
 	    }.bind(this));
+	
+	    const script3 = document.createElement("script");
+	    script3.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
+	    script3.async = true;
+	    document.body.appendChild(script3);
+	
+	    const script1 = document.createElement("script");
+	    script1.type = "text/javascript";
+	    script1.src = "javascript.js";
+	    script1.async = true;
+	    document.body.appendChild(script1);
 	  },
 	
 	  componentWillUnmount: function () {
@@ -33183,7 +33197,6 @@
 	        "Log Out"
 	      ),
 	      this.state.items.map(function (item, idx) {
-	        // console.log(item.item_id);
 	        if (item.body !== null && idx === 0) {
 	          return(
 	            // <div key={idx}>

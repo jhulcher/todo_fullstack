@@ -88,6 +88,8 @@ var ApiUtil = {
         item: {
           rank: rank
         }
+      },
+      success: function (response) {
       }
     });
   },
@@ -107,6 +109,10 @@ var ApiUtil = {
         UserStore.all();
       }
     });
+  },
+
+  changeRanks: function () {
+
   },
 
   logOut: function () {
