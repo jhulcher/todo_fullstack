@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Todo</title>
-  <!-- <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %> -->
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <!-- <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %> -->
   <%= csrf_meta_tags %>
   <script
@@ -21,43 +21,43 @@
     </script>
   <% end %>
 
-  <script type="text/javascript">
-    // jQuery(function ($) {
-    //
-    //   $("ol").sortable();
-    //
-    //   $(document).on("click", "button", function () {
-    //     var count1 = 0;
-    //
-    //     $("ol > li").each(function () {
-    //       count1 += 1;
-    //     });
-    //     var count2 = 0;
-    //
-    //     $("ol > li").each(function (idx) {
-    //
-    //       // if (count2 < count1 - 1) {
-    //         if (parseInt(this.id, 10) == this.id) {
-    //       //     // console.log(
-    //       //     //   parseInt(this.id, 10) + " " + $(this).text() + " " + idx);
-    //       //     ApiUtil.changeRank1(parseInt(this.id, 10), idx);
-    //       //   }
-    //       // } else {
-    //       //   if (parseInt(this.id, 10) == this.id) {
-    //           ApiUtil.changeRank1(parseInt(this.id, 10), idx);
-    //           // setTimeout(function (datum, num) {
-    //           //   ApiUtil.changeRank(parseInt(this.id, 10), idx);
-    //           // }, 1000);
-    //         // }
-    //       }
-    //       // count2 += 1;
-    //     });
-    //     // setTimeout(function () {
-    //       // ApiUtil.fetchUser(window.current_user_id);
-    //     // }, 1000);
-    //   });
-    // });
-  </script>
+  <!-- <script type="text/javascript">
+    jQuery(function ($) {
+
+      $("ol").sortable();
+
+      $(document).on("click", "button", function () {
+        var count1 = 0;
+
+        $("ol > li").each(function () {
+          count1 += 1;
+        });
+        var count2 = 0;
+
+        $("ol > li").each(function (idx) {
+
+          // if (count2 < count1 - 1) {
+            if (parseInt(this.id, 10) == this.id) {
+          //     // console.log(
+          //     //   parseInt(this.id, 10) + " " + $(this).text() + " " + idx);
+          //     ApiUtil.changeRank1(parseInt(this.id, 10), idx);
+          //   }
+          // } else {
+          //   if (parseInt(this.id, 10) == this.id) {
+              ApiUtil.changeRank1(parseInt(this.id, 10), idx);
+              // setTimeout(function (datum, num) {
+              //   ApiUtil.changeRank(parseInt(this.id, 10), idx);
+              // }, 1000);
+            // }
+          }
+          // count2 += 1;
+        });
+        // setTimeout(function () {
+          // ApiUtil.fetchUser(window.current_user_id);
+        // }, 1000);
+      });
+    });
+  </script> -->
 
   <center>
     <%= render "layouts/errors" %>

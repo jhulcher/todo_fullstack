@@ -25844,6 +25844,17 @@
 	    this.listener = UserStore.addListener(function () {
 	      this.setState({ items: UserStore.all() });
 	    }.bind(this));
+	
+	    const script1 = document.createElement("script");
+	    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
+	    script1.async = true;
+	    document.body.appendChild(script1);
+	
+	    const script2 = document.createElement("script");
+	    script2.type = "text/javascript";
+	    script2.src = "javascript.js";
+	    script2.async = true;
+	    document.body.appendChild(script2);
 	  },
 	
 	  componentWillUnmount: function () {
@@ -25857,64 +25868,47 @@
 	  render: function () {
 	
 	    return React.createElement(
-	      "ul",
+	      "div",
 	      null,
 	      React.createElement(
-	        "div",
+	        "span",
 	        { onClick: this.handleUserClick },
 	        "Head back to your List..."
 	      ),
 	      React.createElement(
-	        "div",
+	        "span",
 	        { onClick: this.handleLogOut },
 	        "Log Out"
 	      ),
-	      this.state.items.map(function (item, idx) {
-	        if (item.body !== null && idx === 0) {
-	          return React.createElement(
-	            "div",
-	            { key: idx },
-	            React.createElement(
-	              "p",
-	              null,
-	              "You have done so much, ",
-	              item.username[0].toUpperCase() + item.username.slice(1),
-	              "!"
-	            ),
-	            React.createElement(
-	              "li",
-	              { key: idx },
-	              item.body,
+	      React.createElement(
+	        "div",
+	        null,
+	        this.state.items.map(function (item, idx) {
+	          if (item.body !== null) {
+	            return React.createElement(
+	              "span",
+	              { key: idx, id: item.id },
 	              React.createElement(
-	                "div",
-	                { className: "",
+	                "p",
+	                null,
+	                item.body
+	              ),
+	              React.createElement(
+	                "p",
+	                null,
+	                "completed ",
+	                item.updated_at
+	              ),
+	              React.createElement(
+	                "p",
+	                { className: "delete",
 	                  onClick: this.handleUnfinish.bind(null, item.item_id) },
-	                "X"
+	                "Mark Incomplete"
 	              )
-	            )
-	          );
-	        } else if (item.body === null) {
-	          return React.createElement(
-	            "p",
-	            { key: idx },
-	            "You have done so much, ",
-	            item.username[0].toUpperCase() + item.username.slice(1),
-	            "!"
-	          );
-	        } else {
-	          return React.createElement(
-	            "li",
-	            { key: idx, id: item.id },
-	            item.body,
-	            React.createElement(
-	              "div",
-	              { className: "",
-	                onClick: this.handleUnfinish.bind(null, item.item_id) },
-	              "X"
-	            )
-	          );
-	        }
-	      }.bind(this))
+	            );
+	          }
+	        }.bind(this))
+	      )
 	    );
 	  }
 	
@@ -33152,16 +33146,16 @@
 	      this.setState({ items: UserStore.all() });
 	    }.bind(this));
 	
-	    const script3 = document.createElement("script");
-	    script3.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
-	    script3.async = true;
-	    document.body.appendChild(script3);
-	
 	    const script1 = document.createElement("script");
-	    script1.type = "text/javascript";
-	    script1.src = "javascript.js";
+	    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
 	    script1.async = true;
 	    document.body.appendChild(script1);
+	
+	    const script2 = document.createElement("script");
+	    script2.type = "text/javascript";
+	    script2.src = "javascript.js";
+	    script2.async = true;
+	    document.body.appendChild(script2);
 	  },
 	
 	  componentWillUnmount: function () {
@@ -33184,83 +33178,64 @@
 	
 	  render: function () {
 	    return React.createElement(
-	      "ol",
+	      "div",
 	      null,
 	      React.createElement(
-	        "div",
+	        "span",
 	        { onClick: this.handleUserClick },
 	        "See your Accomplishments!"
 	      ),
 	      React.createElement(
-	        "div",
+	        "span",
 	        { onClick: this.handleLogOut },
 	        "Log Out"
 	      ),
-	      this.state.items.map(function (item, idx) {
-	        if (item.body !== null && idx === 0) {
-	          return(
-	            // <div key={idx}>
-	            //   <p>
-	            //     You have work to do, {
-	            //       item.username[0].toUpperCase()
-	            //       + item.username.slice(1)
-	            //     }!
-	            //   </p>
-	            React.createElement(
-	              "li",
-	              { key: idx, id: item.item_id },
-	              item.body,
-	              React.createElement(
-	                "div",
-	                { className: "",
-	                  onClick: this.handleDelete.bind(null, item.item_id) },
-	                "X"
-	              )
-	            )
-	            // </div>
-	
-	          );
-	        } else if (item.body === null) {
-	            return React.createElement(
-	              "p",
-	              { key: idx },
-	              "You have work to do, ",
-	              item.username[0].toUpperCase() + item.username.slice(1),
-	              "!"
-	            );
-	          } else {
+	      React.createElement(
+	        "ol",
+	        null,
+	        this.state.items.map(function (item, idx) {
+	          if (item.body !== null) {
 	            return React.createElement(
 	              "li",
 	              { key: idx, id: item.item_id },
-	              item.body,
 	              React.createElement(
-	                "div",
-	                { className: "",
+	                "p",
+	                null,
+	                item.body
+	              ),
+	              React.createElement(
+	                "p",
+	                { className: "delete",
 	                  onClick: this.handleDelete.bind(null, item.item_id) },
-	                "X"
+	                "Mark Complete"
 	              )
 	            );
 	          }
-	      }.bind(this)),
+	        }.bind(this))
+	      ),
 	      React.createElement(
-	        "div",
+	        "span",
 	        null,
 	        React.createElement(
 	          "form",
 	          { onSubmit: this.handleCreate },
 	          React.createElement("input", { type: "text",
-	            maxLength: "30",
+	            maxLength: "25",
 	            className: "",
-	            placeholder: "...",
+	            placeholder: "Add New Item Here",
 	            value: this.state.inputValue,
 	            onChange: this.onChange
 	          })
 	        )
 	      ),
 	      React.createElement(
-	        "button",
+	        "span",
 	        null,
-	        "Click to Save Order"
+	        React.createElement(
+	          "button",
+	          null,
+	          "Save Order of Priority"
+	        )
 	      )
 	    );
 	  }

@@ -13,3 +13,80 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+  background-color: white;
+  counter-reset: item;
+}
+
+ol {
+  list-style: none;
+}
+
+p {
+  font-size: 25px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+li:hover {
+  cursor: -webkit-grab; cursor: -moz-grab;
+}
+
+li:active {
+  cursor: -webkit-grabbing; cursor: -moz-grabbing;
+}
+
+li {
+  background-color: #33cccc;
+  border-radius: 15px;
+  width: 300px;
+  box-shadow: 2px 2px 2px grey;
+  counter-increment: item;
+  margin: 15px;
+  font-weight: bold;
+
+}
+
+li:before {
+  margin-right: 256px;
+  margin-top: 8px;
+  margin-bottom: 0px;
+  content: counter(item);
+  background: white;
+  border-radius: 100%;
+  border-width: 2px;
+  border-style: solid;
+  border-color: lightblue;
+  color: black;
+  width: 1.2em;
+  text-align: center;
+  display: inline-block;
+  font-weight: normal;
+}
+
+button {
+  cursor: pointer;
+}
+
+.delete {
+  cursor: pointer;
+  font-size: 14px;
+  padding: 7px 0px 8px 0px;
+  color: black;
+  font-weight: lighter;
+}
+
+.delete:hover {
+  color: black;
+  font-weight: normal;
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+/**/

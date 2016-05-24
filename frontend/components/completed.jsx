@@ -33,6 +33,17 @@ var Completed = React.createClass({
     this.listener = UserStore.addListener(function () {
       this.setState({ items: UserStore.all() })
     }.bind(this));
+
+    const script1 = document.createElement("script");
+    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
+    script1.async = true;
+    document.body.appendChild(script1);
+
+    const script2 = document.createElement("script");
+    script2.type = "text/javascript";
+    script2.src = "javascript.js";
+    script2.async = true;
+    document.body.appendChild(script2);
   },
 
   componentWillUnmount: function () {
@@ -46,60 +57,38 @@ var Completed = React.createClass({
   render: function () {
 
     return (
-      <ul>
-        <div onClick={ this.handleUserClick } >
+      <div>
+        <span onClick={ this.handleUserClick } >
           Head back to your List...
-        </div>
-        <div onClick={ this.handleLogOut } >
+        </span>
+        <span onClick={ this.handleLogOut } >
           Log Out
-        </div>
+        </span>
+        <div>
         {
           this.state.items.map (function (item, idx) {
-            if (item.body !== null && idx === 0) {
+            if (item.body !== null) {
               return (
-                <div key={idx}>
+                <span key={idx} id={item.id}>
                   <p>
-                    You have done so much, {
-                      item.username[0].toUpperCase()
-                      + item.username.slice(1)
-                    }!
-                  </p>
-                  <li key={idx}>
                     { item.body }
-                    <div className=""
-                       onClick={this.handleUnfinish.bind(
-                          null,
-                          item.item_id)}>
-                      X
-                    </div>
-                  </li>
-                </div>
-              );
-            } else if (item.body === null) {
-              return (
-                <p key={idx}>
-                  You have done so much, {
-                    item.username[0].toUpperCase()
-                    + item.username.slice(1)
-                  }!
-                </p>
-              );
-            } else {
-              return (
-                <li key={idx} id={item.id}>
-                  { item.body }
-                  <div className=""
+                  </p>
+                  <p>
+                    completed { item.updated_at }
+                  </p>
+                  <p className="delete"
                      onClick={this.handleUnfinish.bind(
                         null,
                         item.item_id)}>
-                    X
-                  </div>
-                </li>
+                    Mark Incomplete
+                  </p>
+                </span>
               );
             }
           }.bind(this))
         }
-      </ul>
+        </div>
+      </div>
     );
   }
 
