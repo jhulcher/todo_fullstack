@@ -1,5 +1,4 @@
 var ApiActions = require("../actions/api_actions.js");
-
 var UserStore = require("../stores/user.js");
 
 var ApiUtil = {
@@ -10,7 +9,6 @@ var ApiUtil = {
       method: "GET",
       dataType: "json",
       success: function (response) {
-        // console.log(response);
         ApiActions.receiveUser(response);
         UserStore.all();
       }
@@ -40,7 +38,6 @@ var ApiUtil = {
         }
       },
       success: function (response) {
-        // console.log(response);
         ApiActions.receiveUser(response);
         UserStore.all();
       }
@@ -81,23 +78,6 @@ var ApiUtil = {
     });
   },
 
-  changeRank1: function (id, rank) {
-    $.ajax({
-      url: "/api/items/" + id,
-      method: "PATCH",
-      dataType: "json",
-      data: {
-        item: {
-          rank: rank
-        }
-      },
-      success: function (response) {
-        console.log(response);
-        ApiActions.receiveUser(response);
-        UserStore.all();      }
-    });
-  },
-
   changeRank: function (id, rank) {
     $.ajax({
       url: "/api/items/" + id,
@@ -109,15 +89,10 @@ var ApiUtil = {
         }
       },
       success: function (response) {
-        console.log(response);
         ApiActions.receiveUser(response);
         UserStore.all();
       }
     });
-  },
-
-  changeRanks: function () {
-
   },
 
   logOut: function () {

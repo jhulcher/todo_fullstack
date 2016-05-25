@@ -25921,7 +25921,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var ApiActions = __webpack_require__(233);
-	
 	var UserStore = __webpack_require__(239);
 	
 	var ApiUtil = {
@@ -25932,7 +25931,6 @@
 	      method: "GET",
 	      dataType: "json",
 	      success: function (response) {
-	        // console.log(response);
 	        ApiActions.receiveUser(response);
 	        UserStore.all();
 	      }
@@ -25962,7 +25960,6 @@
 	        }
 	      },
 	      success: function (response) {
-	        // console.log(response);
 	        ApiActions.receiveUser(response);
 	        UserStore.all();
 	      }
@@ -26003,24 +26000,6 @@
 	    });
 	  },
 	
-	  changeRank1: function (id, rank) {
-	    $.ajax({
-	      url: "/api/items/" + id,
-	      method: "PATCH",
-	      dataType: "json",
-	      data: {
-	        item: {
-	          rank: rank
-	        }
-	      },
-	      success: function (response) {
-	        console.log(response);
-	        ApiActions.receiveUser(response);
-	        UserStore.all();
-	      }
-	    });
-	  },
-	
 	  changeRank: function (id, rank) {
 	    $.ajax({
 	      url: "/api/items/" + id,
@@ -26032,14 +26011,11 @@
 	        }
 	      },
 	      success: function (response) {
-	        console.log(response);
 	        ApiActions.receiveUser(response);
 	        UserStore.all();
 	      }
 	    });
 	  },
-	
-	  changeRanks: function () {},
 	
 	  logOut: function () {
 	    $.ajax({
@@ -26424,7 +26400,6 @@
 	UserStore.__onDispatch = function (payLoad) {
 	  switch (payLoad.actionType) {
 	    case CONSTANTS.USER_RECEIVED:
-	      // console.log(payLoad.user);
 	      resetUser(payLoad.user);
 	      UserStore.__emitChange();
 	      break;
@@ -33242,7 +33217,7 @@
 	        React.createElement(
 	          "button",
 	          null,
-	          "Save Order of Priority"
+	          "Save Order"
 	        )
 	      )
 	    );

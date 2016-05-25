@@ -107,7 +107,7 @@ var User = React.createClass({
           </span>
           <span>
             <button>
-              Save Order of Priority
+              Save Order
             </button>
           </span>
       </div>

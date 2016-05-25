@@ -13,7 +13,6 @@ var resetUser = function (user) {
 UserStore.__onDispatch = function (payLoad) {
   switch(payLoad.actionType) {
     case CONSTANTS.USER_RECEIVED:
-      // console.log(payLoad.user);
       resetUser(payLoad.user);
       UserStore.__emitChange();
       break;
