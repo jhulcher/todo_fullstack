@@ -33210,15 +33210,6 @@
 	            onChange: this.onChange
 	          })
 	        )
-	      ),
-	      React.createElement(
-	        "span",
-	        null,
-	        React.createElement(
-	          "button",
-	          null,
-	          "Save Order"
-	        )
 	      )
 	    );
 	  }
