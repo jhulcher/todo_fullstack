@@ -1,5 +1,6 @@
 var ApiUtil = require("../util/api_util.js");
 var UserStore = require("../stores/user.js");
+var Nav = require("./nav.jsx");
 var React = require("react");
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
@@ -11,14 +12,6 @@ var Completed = React.createClass({
 
   contextTypes: {
     router: React.PropTypes.object.isRequired
-  },
-
-  handleUserClick: function () {
-    this.context.router.push( "/" );
-  },
-
-  handleLogOut: function () {
-    ApiUtil.logOut();
   },
 
   getInitialState: function () {
@@ -55,34 +48,46 @@ var Completed = React.createClass({
   },
 
   render: function () {
-
     return (
       <div>
-        <span onClick={ this.handleUserClick } >
-          Head back to your List...
-        </span>
-        <span onClick={ this.handleLogOut } >
-          Log Out
-        </span>
+        <div>
+          {
+            this.state.items.map (function (item, idx) {
+              if (idx === 0) {
+                return (
+                  <Nav item={ item } key={ idx }></Nav>
+                );
+              }
+            }.bind(this))
+          }
+        </div>
         <div>
         {
           this.state.items.map (function (item, idx) {
             if (item.body !== null) {
               return (
-                <span key={idx} id={item.id}>
+                <div
+                    className="completed-item"
+                    key={idx}
+                    id={item.id}
+                    >
                   <p>
                     { item.body }
                   </p>
-                  <p>
-                    completed { item.updated_at }
-                  </p>
-                  <p className="delete"
-                     onClick={this.handleUnfinish.bind(
+                  <span
+                      className="completed"
+                      >
+                        Completed { item.updated_at }
+                  </span>
+                  <span
+                      className="delete"
+                      onClick={this.handleUnfinish.bind(
                         null,
-                        item.item_id)}>
-                    Mark Incomplete
-                  </p>
-                </span>
+                        item.item_id)
+                      }>
+                        Mark Incomplete
+                  </span>
+                </div>
               );
             }
           }.bind(this))

@@ -25811,6 +25811,7 @@
 
 	var ApiUtil = __webpack_require__(232);
 	var UserStore = __webpack_require__(239);
+	var Nav = __webpack_require__(262);
 	var React = __webpack_require__(1);
 	var LinkedStateMixin = __webpack_require__(257);
 	
@@ -25824,14 +25825,6 @@
 	
 	  contextTypes: {
 	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  handleUserClick: function () {
-	    this.context.router.push("/");
-	  },
-	
-	  handleLogOut: function () {
-	    ApiUtil.logOut();
 	  },
 	
 	  getInitialState: function () {
@@ -25866,19 +25859,17 @@
 	  },
 	
 	  render: function () {
-	
 	    return React.createElement(
 	      "div",
 	      null,
 	      React.createElement(
-	        "span",
-	        { onClick: this.handleUserClick },
-	        "Head back to your List..."
-	      ),
-	      React.createElement(
-	        "span",
-	        { onClick: this.handleLogOut },
-	        "Log Out"
+	        "div",
+	        null,
+	        this.state.items.map(function (item, idx) {
+	          if (idx === 0) {
+	            return React.createElement(Nav, { item: item, key: idx });
+	          }
+	        }.bind(this))
 	      ),
 	      React.createElement(
 	        "div",
@@ -25886,22 +25877,29 @@
 	        this.state.items.map(function (item, idx) {
 	          if (item.body !== null) {
 	            return React.createElement(
-	              "span",
-	              { key: idx, id: item.id },
+	              "div",
+	              {
+	                className: "completed-item",
+	                key: idx,
+	                id: item.id
+	              },
 	              React.createElement(
 	                "p",
 	                null,
 	                item.body
 	              ),
 	              React.createElement(
-	                "p",
-	                null,
-	                "completed ",
+	                "span",
+	                {
+	                  className: "completed"
+	                },
+	                "Completed ",
 	                item.updated_at
 	              ),
 	              React.createElement(
-	                "p",
-	                { className: "delete",
+	                "span",
+	                {
+	                  className: "delete",
 	                  onClick: this.handleUnfinish.bind(null, item.item_id) },
 	                "Mark Incomplete"
 	              )
@@ -33095,6 +33093,7 @@
 
 	var ApiUtil = __webpack_require__(232);
 	var UserStore = __webpack_require__(239);
+	var Nav = __webpack_require__(262);
 	var React = __webpack_require__(1);
 	var LinkedStateMixin = __webpack_require__(257);
 	
@@ -33108,14 +33107,6 @@
 	
 	  contextTypes: {
 	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  handleUserClick: function () {
-	    this.context.router.push("completed");
-	  },
-	
-	  handleLogOut: function () {
-	    ApiUtil.logOut();
 	  },
 	
 	  getInitialState: function () {
@@ -33164,14 +33155,13 @@
 	      "div",
 	      null,
 	      React.createElement(
-	        "span",
-	        { onClick: this.handleUserClick },
-	        "See your Accomplishments!"
-	      ),
-	      React.createElement(
-	        "span",
-	        { onClick: this.handleLogOut },
-	        "Log Out"
+	        "div",
+	        null,
+	        this.state.items.map(function (item, idx) {
+	          if (idx === 0) {
+	            return React.createElement(Nav, { item: item, key: idx });
+	          }
+	        }.bind(this))
 	      ),
 	      React.createElement(
 	        "ol",
@@ -33188,7 +33178,7 @@
 	              ),
 	              React.createElement(
 	                "p",
-	                { className: "delete",
+	                { className: "complete",
 	                  onClick: this.handleDelete.bind(null, item.item_id) },
 	                "Mark Complete"
 	              )
@@ -33218,6 +33208,86 @@
 	window.User = User;
 	
 	module.exports = User;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var UserStore = __webpack_require__(239);
+	var ApiUtil = __webpack_require__(232);
+	var LinkedStateMixin = __webpack_require__(257);
+	
+	var cur = window.current_user_id;
+	
+	var Nav = React.createClass({
+	  displayName: "Nav",
+	
+	
+	  mixins: [LinkedStateMixin],
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  handleLogout: function () {
+	    ApiUtil.logOut();
+	  },
+	
+	  handleUserClick: function () {
+	    this.context.router.push("completed");
+	  },
+	
+	  handleListClick: function () {
+	    this.context.router.push("/");
+	  },
+	
+	  componentWillMount: function () {
+	
+	    const script1 = document.createElement("script");
+	    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
+	    script1.async = true;
+	    document.body.appendChild(script1);
+	
+	    const script2 = document.createElement("script");
+	    script2.type = "text/javascript";
+	    script2.src = "javascript.js";
+	    script2.async = true;
+	    document.body.appendChild(script2);
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "span",
+	        null,
+	        "Welcome ",
+	        this.props.item.username[0].toUpperCase() + this.props.item.username.slice(1),
+	        "!"
+	      ),
+	      React.createElement(
+	        "span",
+	        { onClick: this.handleListClick },
+	        "Your List"
+	      ),
+	      React.createElement(
+	        "span",
+	        { onClick: this.handleUserClick },
+	        "Your Accomplishments"
+	      ),
+	      React.createElement(
+	        "span",
+	        { onClick: this.handleLogout },
+	        "Log Out"
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Nav;
 
 /***/ }
 /******/ ]);

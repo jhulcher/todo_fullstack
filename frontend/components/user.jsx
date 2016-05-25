@@ -1,5 +1,6 @@
 var ApiUtil = require("../util/api_util.js");
 var UserStore = require("../stores/user.js");
+var Nav = require("./nav.jsx");
 var React = require("react");
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
@@ -11,14 +12,6 @@ var User = React.createClass({
 
   contextTypes: {
     router: React.PropTypes.object.isRequired
-  },
-
-  handleUserClick: function () {
-    this.context.router.push( "completed" );
-  },
-
-  handleLogOut: function () {
-    ApiUtil.logOut();
   },
 
   getInitialState: function () {
@@ -67,12 +60,17 @@ var User = React.createClass({
   render: function () {
     return (
       <div>
-        <span onClick={ this.handleUserClick } >
-          See your Accomplishments!
-        </span>
-        <span onClick={ this.handleLogOut } >
-          Log Out
-        </span>
+        <div>
+          {
+            this.state.items.map (function (item, idx) {
+              if (idx === 0) {
+                return (
+                  <Nav item={ item } key={ idx }></Nav>
+                );
+              }
+            }.bind(this))
+          }
+        </div>
         <ol>
         {
           this.state.items.map (function (item, idx) {
@@ -82,7 +80,7 @@ var User = React.createClass({
                   <p>
                     { item.body }
                   </p>
-                  <p className="delete"
+                  <p className="complete"
                      onClick={this.handleDelete.bind(
                         null,
                         item.item_id)}>

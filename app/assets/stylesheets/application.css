@@ -45,7 +45,7 @@ li {
   counter-increment: item;
   margin: 15px;
   font-weight: bold;
-
+  margin-right: 56px;
 }
 
 li:before {
@@ -69,10 +69,32 @@ button {
   cursor: pointer;
 }
 
-.delete {
+span {
+  margin: 5px;
+}
+
+.complete {
   cursor: pointer;
   font-size: 14px;
   padding: 7px 0px 8px 0px;
+  color: black;
+  font-weight: lighter;
+}
+
+.completed {
+  font-size: 14px;
+  padding: 8px 0px 8px 0px;
+  /*font-weight: bold;*/
+}
+
+.completed-item {
+  padding: 10px 0px 10px 0px;
+}
+
+.delete {
+  cursor: pointer;
+  font-size: 12px;
+  /*padding: 7px 0px 8px 0px;*/
   color: black;
   font-weight: lighter;
 }
