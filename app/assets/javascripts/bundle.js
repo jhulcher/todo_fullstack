@@ -25926,12 +25926,13 @@
 	
 	var ApiUtil = {
 	
-	  fetchUser: function (id) {
+	  fetchUser: function () {
 	    $.ajax({
 	      url: "api/items",
 	      method: "GET",
 	      dataType: "json",
 	      success: function (response) {
+	        // console.log(response);
 	        ApiActions.receiveUser(response);
 	        UserStore.all();
 	      }
@@ -25961,6 +25962,7 @@
 	        }
 	      },
 	      success: function (response) {
+	        // console.log(response);
 	        ApiActions.receiveUser(response);
 	        UserStore.all();
 	      }
@@ -26011,7 +26013,11 @@
 	          rank: rank
 	        }
 	      },
-	      success: function (response) {}
+	      success: function (response) {
+	        console.log(response);
+	        ApiActions.receiveUser(response);
+	        UserStore.all();
+	      }
 	    });
 	  },
 	
@@ -26026,6 +26032,7 @@
 	        }
 	      },
 	      success: function (response) {
+	        console.log(response);
 	        ApiActions.receiveUser(response);
 	        UserStore.all();
 	      }
@@ -26417,6 +26424,7 @@
 	UserStore.__onDispatch = function (payLoad) {
 	  switch (payLoad.actionType) {
 	    case CONSTANTS.USER_RECEIVED:
+	      // console.log(payLoad.user);
 	      resetUser(payLoad.user);
 	      UserStore.__emitChange();
 	      break;
@@ -33197,7 +33205,7 @@
 	          if (item.body !== null) {
 	            return React.createElement(
 	              "li",
-	              { key: idx, id: item.item_id },
+	              { key: item.item_rank, id: item.item_id },
 	              React.createElement(
 	                "p",
 	                null,

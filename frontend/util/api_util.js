@@ -4,12 +4,13 @@ var UserStore = require("../stores/user.js");
 
 var ApiUtil = {
 
-  fetchUser: function (id) {
+  fetchUser: function () {
     $.ajax({
       url: "api/items",
       method: "GET",
       dataType: "json",
       success: function (response) {
+        // console.log(response);
         ApiActions.receiveUser(response);
         UserStore.all();
       }
@@ -39,6 +40,7 @@ var ApiUtil = {
         }
       },
       success: function (response) {
+        // console.log(response);
         ApiActions.receiveUser(response);
         UserStore.all();
       }
@@ -90,7 +92,9 @@ var ApiUtil = {
         }
       },
       success: function (response) {
-      }
+        console.log(response);
+        ApiActions.receiveUser(response);
+        UserStore.all();      }
     });
   },
 
@@ -105,6 +109,7 @@ var ApiUtil = {
         }
       },
       success: function (response) {
+        console.log(response);
         ApiActions.receiveUser(response);
         UserStore.all();
       }

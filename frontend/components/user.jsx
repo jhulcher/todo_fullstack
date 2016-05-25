@@ -78,7 +78,7 @@ var User = React.createClass({
           this.state.items.map (function (item, idx) {
             if (item.body !== null) {
               return (
-                <li key={idx} id={ item.item_id }>
+                <li key={ item.item_rank } id={ item.item_id }>
                   <p>
                     { item.body }
                   </p>
