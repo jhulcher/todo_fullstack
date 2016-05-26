@@ -76,23 +76,26 @@ var Completed = React.createClass({
                     key={idx}
                     id={item.id}
                     >
-                  <p>
+                    <div className="screw1">+</div>
+                    <div className="screw2">+</div>
+                    <div className="screw3">+</div>
+                    <div className="screw4">+</div>
+                  <p className="item-body">
                     { item.body }
                   </p>
-                  <span
+                  <div
                       className="completed"
                       >
                         Completed on { item.updated_at }
-                  </span>
-                  -
-                  <span
+                  </div>
+                  <div
                       className="delete"
                       onClick={this.handleUnfinish.bind(
                         null,
                         item.item_id)
                       }>
                         Mark Incomplete
-                  </span>
+                  </div>
                 </div>
               );
             }

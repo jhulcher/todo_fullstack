@@ -25895,21 +25895,40 @@
 	              id: item.id
 	            },
 	            React.createElement(
+	              "div",
+	              { className: "screw1" },
+	              "+"
+	            ),
+	            React.createElement(
+	              "div",
+	              { className: "screw2" },
+	              "+"
+	            ),
+	            React.createElement(
+	              "div",
+	              { className: "screw3" },
+	              "+"
+	            ),
+	            React.createElement(
+	              "div",
+	              { className: "screw4" },
+	              "+"
+	            ),
+	            React.createElement(
 	              "p",
-	              null,
+	              { className: "item-body" },
 	              item.body
 	            ),
 	            React.createElement(
-	              "span",
+	              "div",
 	              {
 	                className: "completed"
 	              },
 	              "Completed on ",
 	              item.updated_at
 	            ),
-	            "-",
 	            React.createElement(
-	              "span",
+	              "div",
 	              {
 	                className: "delete",
 	                onClick: this.handleUnfinish.bind(null, item.item_id) },
