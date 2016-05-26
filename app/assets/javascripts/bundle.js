@@ -25876,7 +25876,7 @@
 	      React.createElement(
 	        "div",
 	        { className: "heading" },
-	        React.createElement("img", { src: "images/trophy.png" }),
+	        React.createElement("img", { src: "images/Trophy.png" }),
 	        React.createElement(
 	          "p",
 	          null,

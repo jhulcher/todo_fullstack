@@ -62,7 +62,7 @@ var Completed = React.createClass({
           }
         </div>
         <div className="heading">
-          <img src="images/trophy.png" />
+          <img src="images/Trophy.png" />
           <p>
             Youve completed { this.state.items.length } tasks!
           </p>
