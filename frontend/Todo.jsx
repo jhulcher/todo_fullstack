@@ -12,6 +12,7 @@ var IndexRoute = ReactRouter.IndexRoute;
 var Router = ReactRouter.Router;
 
 var App = React.createClass({
+
   render: function () {
     return (
       <div>
@@ -19,6 +20,7 @@ var App = React.createClass({
       </div>
     )
   }
+
 });
 
 var Routes = (

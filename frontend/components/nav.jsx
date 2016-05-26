@@ -26,7 +26,6 @@ var Nav = React.createClass({
   },
 
   componentWillMount: function () {
-
     const script1 = document.createElement("script");
     script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
     script1.async = true;
@@ -41,17 +40,23 @@ var Nav = React.createClass({
 
   render: function () {
     return (
-      <div>
+      <div className="nav">
         <span>
           Welcome { this.props.item.username[0].toUpperCase() + this.props.item.username.slice(1) }!
         </span>
-        <span onClick={ this.handleListClick } >
+        <span
+            className="link"
+            onClick={ this.handleListClick } >
           Your List
         </span>
-        <span onClick={ this.handleUserClick } >
+        <span
+            className="link"
+            onClick={ this.handleUserClick } >
           Your Accomplishments
         </span>
-        <span onClick={ this.handleLogout } >
+        <span
+            className="link"
+            onClick={ this.handleLogout } >
           Log Out
         </span>
       </div>

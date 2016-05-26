@@ -16,6 +16,6 @@ else
     json.body item.item_body
     json.item_rank item.rank
     json.finished_yet item.finished
-    json.updated_at time_ago_in_words(item.updated_at) + " ago"
+    json.updated_at item.updated_at.to_time.strftime('%B %e at %l:%M %p')
   end
 end

@@ -49,7 +49,7 @@
 	var ReactRouter = __webpack_require__(168);
 	var Completed = __webpack_require__(231);
 	
-	var User = __webpack_require__(261);
+	var User = __webpack_require__(262);
 	
 	var ApiUtil = __webpack_require__(232);
 	
@@ -60,6 +60,7 @@
 	var App = React.createClass({
 	  displayName: "App",
 	
+	
 	  render: function () {
 	    return React.createElement(
 	      "div",
@@ -67,6 +68,7 @@
 	      this.props.children
 	    );
 	  }
+	
 	});
 	
 	var Routes = React.createElement(
@@ -25811,9 +25813,9 @@
 
 	var ApiUtil = __webpack_require__(232);
 	var UserStore = __webpack_require__(239);
-	var Nav = __webpack_require__(262);
+	var Nav = __webpack_require__(257);
 	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(257);
+	var LinkedStateMixin = __webpack_require__(258);
 	
 	var cur = window.current_user_id;
 	
@@ -25873,40 +25875,49 @@
 	      ),
 	      React.createElement(
 	        "div",
-	        null,
-	        this.state.items.map(function (item, idx) {
-	          if (item.body !== null) {
-	            return React.createElement(
-	              "div",
+	        { className: "heading" },
+	        React.createElement("img", { src: "images/trophy.png" }),
+	        React.createElement(
+	          "p",
+	          null,
+	          "Youve completed ",
+	          this.state.items.length,
+	          " tasks!"
+	        )
+	      ),
+	      this.state.items.map(function (item, idx) {
+	        if (item.body !== null) {
+	          return React.createElement(
+	            "div",
+	            {
+	              className: "completed-item",
+	              key: idx,
+	              id: item.id
+	            },
+	            React.createElement(
+	              "p",
+	              null,
+	              item.body
+	            ),
+	            React.createElement(
+	              "span",
 	              {
-	                className: "completed-item",
-	                key: idx,
-	                id: item.id
+	                className: "completed"
 	              },
-	              React.createElement(
-	                "p",
-	                null,
-	                item.body
-	              ),
-	              React.createElement(
-	                "span",
-	                {
-	                  className: "completed"
-	                },
-	                "Completed ",
-	                item.updated_at
-	              ),
-	              React.createElement(
-	                "span",
-	                {
-	                  className: "delete",
-	                  onClick: this.handleUnfinish.bind(null, item.item_id) },
-	                "Mark Incomplete"
-	              )
-	            );
-	          }
-	        }.bind(this))
-	      )
+	              "Completed on ",
+	              item.updated_at
+	            ),
+	            "-",
+	            React.createElement(
+	              "span",
+	              {
+	                className: "delete",
+	                onClick: this.handleUnfinish.bind(null, item.item_id) },
+	              "Mark Incomplete"
+	            )
+	          );
+	        }
+	      }.bind(this))
 	    );
 	  }
 	
@@ -32863,10 +32874,95 @@
 /* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(258);
+	var React = __webpack_require__(1);
+	var UserStore = __webpack_require__(239);
+	var ApiUtil = __webpack_require__(232);
+	var LinkedStateMixin = __webpack_require__(258);
+	
+	var cur = window.current_user_id;
+	
+	var Nav = React.createClass({
+	  displayName: "Nav",
+	
+	
+	  mixins: [LinkedStateMixin],
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  handleLogout: function () {
+	    ApiUtil.logOut();
+	  },
+	
+	  handleUserClick: function () {
+	    this.context.router.push("completed");
+	  },
+	
+	  handleListClick: function () {
+	    this.context.router.push("/");
+	  },
+	
+	  componentWillMount: function () {
+	    const script1 = document.createElement("script");
+	    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
+	    script1.async = true;
+	    document.body.appendChild(script1);
+	
+	    const script2 = document.createElement("script");
+	    script2.type = "text/javascript";
+	    script2.src = "javascript.js";
+	    script2.async = true;
+	    document.body.appendChild(script2);
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      { className: "nav" },
+	      React.createElement(
+	        "span",
+	        null,
+	        "Welcome ",
+	        this.props.item.username[0].toUpperCase() + this.props.item.username.slice(1),
+	        "!"
+	      ),
+	      React.createElement(
+	        "span",
+	        {
+	          className: "link",
+	          onClick: this.handleListClick },
+	        "Your List"
+	      ),
+	      React.createElement(
+	        "span",
+	        {
+	          className: "link",
+	          onClick: this.handleUserClick },
+	        "Your Accomplishments"
+	      ),
+	      React.createElement(
+	        "span",
+	        {
+	          className: "link",
+	          onClick: this.handleLogout },
+	        "Log Out"
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Nav;
 
 /***/ },
 /* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(259);
+
+/***/ },
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32882,8 +32978,8 @@
 	
 	'use strict';
 	
-	var ReactLink = __webpack_require__(259);
-	var ReactStateSetters = __webpack_require__(260);
+	var ReactLink = __webpack_require__(260);
+	var ReactStateSetters = __webpack_require__(261);
 	
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -32906,7 +33002,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32979,7 +33075,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports) {
 
 	/**
@@ -33088,14 +33184,14 @@
 	module.exports = ReactStateSetters;
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ApiUtil = __webpack_require__(232);
 	var UserStore = __webpack_require__(239);
-	var Nav = __webpack_require__(262);
+	var Nav = __webpack_require__(257);
 	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(257);
+	var LinkedStateMixin = __webpack_require__(258);
 	
 	var cur = window.current_user_id;
 	
@@ -33173,7 +33269,7 @@
 	              { key: item.item_rank, id: item.item_id },
 	              React.createElement(
 	                "p",
-	                null,
+	                { className: "todo-text" },
 	                item.body
 	              ),
 	              React.createElement(
@@ -33187,19 +33283,15 @@
 	        }.bind(this))
 	      ),
 	      React.createElement(
-	        "span",
-	        null,
-	        React.createElement(
-	          "form",
-	          { onSubmit: this.handleCreate },
-	          React.createElement("input", { type: "text",
-	            maxLength: "25",
-	            className: "",
-	            placeholder: "Add New Item Here",
-	            value: this.state.inputValue,
-	            onChange: this.onChange
-	          })
-	        )
+	        "form",
+	        { onSubmit: this.handleCreate },
+	        React.createElement("input", { type: "text",
+	          maxLength: "25",
+	          className: "",
+	          placeholder: "Add New Item Here",
+	          value: this.state.inputValue,
+	          onChange: this.onChange
+	        })
 	      )
 	    );
 	  }
@@ -33208,86 +33300,6 @@
 	window.User = User;
 	
 	module.exports = User;
-
-/***/ },
-/* 262 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var UserStore = __webpack_require__(239);
-	var ApiUtil = __webpack_require__(232);
-	var LinkedStateMixin = __webpack_require__(257);
-	
-	var cur = window.current_user_id;
-	
-	var Nav = React.createClass({
-	  displayName: "Nav",
-	
-	
-	  mixins: [LinkedStateMixin],
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  handleLogout: function () {
-	    ApiUtil.logOut();
-	  },
-	
-	  handleUserClick: function () {
-	    this.context.router.push("completed");
-	  },
-	
-	  handleListClick: function () {
-	    this.context.router.push("/");
-	  },
-	
-	  componentWillMount: function () {
-	
-	    const script1 = document.createElement("script");
-	    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
-	    script1.async = true;
-	    document.body.appendChild(script1);
-	
-	    const script2 = document.createElement("script");
-	    script2.type = "text/javascript";
-	    script2.src = "javascript.js";
-	    script2.async = true;
-	    document.body.appendChild(script2);
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      "div",
-	      null,
-	      React.createElement(
-	        "span",
-	        null,
-	        "Welcome ",
-	        this.props.item.username[0].toUpperCase() + this.props.item.username.slice(1),
-	        "!"
-	      ),
-	      React.createElement(
-	        "span",
-	        { onClick: this.handleListClick },
-	        "Your List"
-	      ),
-	      React.createElement(
-	        "span",
-	        { onClick: this.handleUserClick },
-	        "Your Accomplishments"
-	      ),
-	      React.createElement(
-	        "span",
-	        { onClick: this.handleLogout },
-	        "Log Out"
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = Nav;
 
 /***/ }
 /******/ ]);

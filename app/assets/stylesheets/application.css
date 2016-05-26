@@ -17,6 +17,10 @@
 body {
   background-color: white;
   counter-reset: item;
+  font-family: 'Muli', sans-serif;
+  width: 100%;
+  padding-left: 0px;
+  margin: 0px;
 }
 
 ol {
@@ -38,14 +42,26 @@ li:active {
 }
 
 li {
-  background-color: #33cccc;
+  /*background-color: #33cccc;*/
+  /*background-color: #3366ff;*/
+  background-color: #3385ff;
+  color: white;
   border-radius: 15px;
   width: 300px;
-  box-shadow: 2px 2px 2px grey;
+  box-shadow: 2px 2px 2px #cccccc;
   counter-increment: item;
   margin: 15px;
   font-weight: bold;
   margin-right: 56px;
+
+  background: rgba(163,194,255,1);
+  background: -moz-linear-gradient(top, rgba(163,194,255,1) 0%, rgba(97,152,255,1) 50%, rgba(5,101,255,1) 51%, rgba(163,194,255,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(163,194,255,1)), color-stop(50%, rgba(97,152,255,1)), color-stop(51%, rgba(5,101,255,1)), color-stop(100%, rgba(163,194,255,1)));
+  background: -webkit-linear-gradient(top, rgba(163,194,255,1) 0%, rgba(97,152,255,1) 50%, rgba(5,101,255,1) 51%, rgba(163,194,255,1) 100%);
+  background: -o-linear-gradient(top, rgba(163,194,255,1) 0%, rgba(97,152,255,1) 50%, rgba(5,101,255,1) 51%, rgba(163,194,255,1) 100%);
+  background: -ms-linear-gradient(top, rgba(163,194,255,1) 0%, rgba(97,152,255,1) 50%, rgba(5,101,255,1) 51%, rgba(163,194,255,1) 100%);
+  background: linear-gradient(to bottom, rgba(163,194,255,1) 0%, rgba(97,152,255,1) 50%, rgba(5,101,255,1) 51%, rgba(163,194,255,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a3c2ff', endColorstr='#a3c2ff', GradientType=0 );
 }
 
 li:before {
@@ -57,9 +73,9 @@ li:before {
   border-radius: 100%;
   border-width: 2px;
   border-style: solid;
-  border-color: lightblue;
+  border-color: #e6e6e6;
   color: black;
-  width: 1.2em;
+  width: 1.3em;
   text-align: center;
   display: inline-block;
   font-weight: normal;
@@ -71,14 +87,26 @@ button {
 
 span {
   margin: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.todo-text {
+  font-weight: normal;
+  text-shadow: black .5px .5px;
+  font-family: montserrat;
 }
 
 .complete {
   cursor: pointer;
   font-size: 14px;
   padding: 7px 0px 8px 0px;
-  color: black;
+  color: white;
   font-weight: lighter;
+}
+
+.complete:hover {
+  text-decoration: underline;
 }
 
 .completed {
@@ -105,6 +133,26 @@ span {
   text-decoration: underline;
 }
 
+.link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.nav {
+  font-weight: lighter;
+  font-size: 20px;
+  padding-bottom: 11px;
+  padding-top: 10px;
+  background-color: white;
+  width: 100%;
+  box-shadow: 0px 0px 200px #66a3ff;
+}
+
+.heading {
+  padding-top: 15px;
+  font-weight: lighter;
+  font-size: 20px;
+}
 
 
 

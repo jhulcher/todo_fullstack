@@ -61,7 +61,12 @@ var Completed = React.createClass({
             }.bind(this))
           }
         </div>
-        <div>
+        <div className="heading">
+          <img src="images/trophy.png" />
+          <p>
+            Youve completed { this.state.items.length } tasks!
+          </p>
+        </div>
         {
           this.state.items.map (function (item, idx) {
             if (item.body !== null) {
@@ -77,8 +82,9 @@ var Completed = React.createClass({
                   <span
                       className="completed"
                       >
-                        Completed { item.updated_at }
+                        Completed on { item.updated_at }
                   </span>
+                  -
                   <span
                       className="delete"
                       onClick={this.handleUnfinish.bind(
@@ -92,7 +98,6 @@ var Completed = React.createClass({
             }
           }.bind(this))
         }
-        </div>
       </div>
     );
   }

@@ -77,7 +77,7 @@ var User = React.createClass({
             if (item.body !== null) {
               return (
                 <li key={ item.item_rank } id={ item.item_id }>
-                  <p>
+                  <p className="todo-text">
                     { item.body }
                   </p>
                   <p className="complete"
@@ -92,17 +92,15 @@ var User = React.createClass({
           }.bind(this))
         }
         </ol>
-        <span>
-          <form onSubmit={this.handleCreate}>
-            <input type="text"
-                   maxLength="25"
-                   className=""
-                   placeholder="Add New Item Here"
-                   value={this.state.inputValue}
-                   onChange={this.onChange}
-                   />
-          </form>
-        </span>
+        <form onSubmit={this.handleCreate}>
+          <input type="text"
+                 maxLength="25"
+                 className=""
+                 placeholder="Add New Item Here"
+                 value={this.state.inputValue}
+                 onChange={this.onChange}
+                 />
+        </form>
       </div>
     );
   }
