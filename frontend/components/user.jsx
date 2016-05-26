@@ -60,17 +60,7 @@ var User = React.createClass({
   render: function () {
     return (
       <div>
-        <div>
-          {
-            this.state.items.map (function (item, idx) {
-              if (idx === 0) {
-                return (
-                  <Nav item={ item } key={ idx }></Nav>
-                );
-              }
-            }.bind(this))
-          }
-        </div>
+        <Nav key="9999"></Nav>
         <ol>
         {
           this.state.items.map (function (item, idx) {

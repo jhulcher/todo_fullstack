@@ -2,48 +2,39 @@ var React = require("react");
 var UserStore = require("../stores/user.js");
 var ApiUtil = require("../util/api_util.js");
 var LinkedStateMixin = require("react-addons-linked-state-mixin");
+var withRouter = require("react-router").withRouter;
 
 var cur = window.current_user_id;
 
 var Nav = React.createClass({
 
-  mixins: [LinkedStateMixin],
-
-  contextTypes: {
-    router: React.PropTypes.object.isRequired
+  propTypes: {
+    router: React.PropTypes.shape({
+      push: React.PropTypes.func.isRequired
+    }).isRequired
   },
 
   handleLogout: function () {
     ApiUtil.logOut();
   },
 
+  shouldComponentUpdate: function () {
+    return false;
+  },
+
   handleUserClick: function () {
-    this.context.router.push( "completed" );
+    // e.preventDefault();
+    this.props.router.push("completed");
   },
 
   handleListClick: function () {
-    this.context.router.push( "/" );
-  },
-
-  componentWillMount: function () {
-    const script1 = document.createElement("script");
-    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
-    script1.async = true;
-    document.body.appendChild(script1);
-
-    const script2 = document.createElement("script");
-    script2.type = "text/javascript";
-    script2.src = "javascript.js";
-    script2.async = true;
-    document.body.appendChild(script2);
+    // e.preventDefault();
+    this.props.router.push("/");
   },
 
   render: function () {
     return (
       <div className="nav">
-        <span>
-          Welcome { this.props.item.username[0].toUpperCase() + this.props.item.username.slice(1) }!
-        </span>
         <span
             className="link"
             onClick={ this.handleListClick } >
@@ -65,4 +56,4 @@ var Nav = React.createClass({
 
 });
 
-module.exports = Nav;
+module.exports = withRouter(Nav);
