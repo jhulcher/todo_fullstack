@@ -49,9 +49,9 @@
 	var ReactRouter = __webpack_require__(168);
 	var Completed = __webpack_require__(231);
 	
-	var User = __webpack_require__(232);
+	var User = __webpack_require__(262);
 	
-	var ApiUtil = __webpack_require__(233);
+	var ApiUtil = __webpack_require__(232);
 	
 	var Route = ReactRouter.Route;
 	var IndexRoute = ReactRouter.IndexRoute;
@@ -25811,11 +25811,11 @@
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ApiUtil = __webpack_require__(233);
-	var UserStore = __webpack_require__(240);
-	var Nav = __webpack_require__(258);
+	var ApiUtil = __webpack_require__(232);
+	var UserStore = __webpack_require__(239);
+	var Nav = __webpack_require__(257);
 	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(259);
+	var LinkedStateMixin = __webpack_require__(258);
 	
 	var cur = window.current_user_id;
 	
@@ -25940,118 +25940,8 @@
 /* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ApiUtil = __webpack_require__(233);
-	var UserStore = __webpack_require__(240);
-	var Nav = __webpack_require__(258);
-	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(259);
-	
-	var cur = window.current_user_id;
-	
-	var User = React.createClass({
-	  displayName: "User",
-	
-	
-	  mixins: [LinkedStateMixin],
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function () {
-	    return { items: [], inputValue: "" };
-	  },
-	
-	  componentWillMount: function () {
-	    ApiUtil.fetchUser(cur);
-	
-	    this.listener = UserStore.addListener(function () {
-	      this.setState({ items: UserStore.all() });
-	    }.bind(this));
-	
-	    const script1 = document.createElement("script");
-	    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
-	    script1.async = true;
-	    document.body.appendChild(script1);
-	
-	    const script2 = document.createElement("script");
-	    script2.type = "text/javascript";
-	    script2.src = "javascript.js";
-	    script2.async = true;
-	    document.body.appendChild(script2);
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.listener.remove();
-	  },
-	
-	  handleCreate: function (e) {
-	    e.preventDefault();
-	    ApiUtil.createItem(this.state.inputValue);
-	    this.setState({ inputValue: "" });
-	  },
-	
-	  handleDelete: function (id) {
-	    ApiUtil.finishItem(id);
-	  },
-	
-	  onChange: function (e) {
-	    this.setState({ inputValue: e.target.value });
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      "div",
-	      null,
-	      React.createElement(Nav, { key: "9999" }),
-	      React.createElement(
-	        "ol",
-	        null,
-	        this.state.items.map(function (item, idx) {
-	          if (item.body !== null) {
-	            return React.createElement(
-	              "li",
-	              { key: item.item_rank, id: item.item_id },
-	              React.createElement(
-	                "p",
-	                { className: "todo-text" },
-	                item.body
-	              ),
-	              React.createElement(
-	                "p",
-	                { className: "complete",
-	                  onClick: this.handleDelete.bind(null, item.item_id) },
-	                "Mark Complete"
-	              )
-	            );
-	          }
-	        }.bind(this))
-	      ),
-	      React.createElement(
-	        "form",
-	        { onSubmit: this.handleCreate },
-	        React.createElement("input", { type: "text",
-	          maxLength: "25",
-	          className: "",
-	          placeholder: "Add New Item Here",
-	          value: this.state.inputValue,
-	          onChange: this.onChange
-	        })
-	      )
-	    );
-	  }
-	});
-	
-	window.User = User;
-	
-	module.exports = User;
-
-/***/ },
-/* 233 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var ApiActions = __webpack_require__(234);
-	var UserStore = __webpack_require__(240);
+	var ApiActions = __webpack_require__(233);
+	var UserStore = __webpack_require__(239);
 	
 	var ApiUtil = {
 	
@@ -26164,11 +26054,11 @@
 	module.exports = ApiUtil;
 
 /***/ },
-/* 234 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(235);
-	var Constants = __webpack_require__(239);
+	var AppDispatcher = __webpack_require__(234);
+	var Constants = __webpack_require__(238);
 	
 	var ApiActions = {
 	
@@ -26184,15 +26074,15 @@
 	module.exports = ApiActions;
 
 /***/ },
-/* 235 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(236).Dispatcher;
+	var Dispatcher = __webpack_require__(235).Dispatcher;
 	
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 236 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26204,11 +26094,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(237);
+	module.exports.Dispatcher = __webpack_require__(236);
 
 
 /***/ },
-/* 237 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26230,7 +26120,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(237);
 	
 	var _prefix = 'ID_';
 	
@@ -26445,7 +26335,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 238 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26500,7 +26390,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 239 */
+/* 238 */
 /***/ function(module, exports) {
 
 	var Constants = {
@@ -26512,12 +26402,12 @@
 	module.exports = Constants;
 
 /***/ },
-/* 240 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(241).Store;
-	var AppDispatcher = __webpack_require__(235);
-	var CONSTANTS = __webpack_require__(239);
+	var Store = __webpack_require__(240).Store;
+	var AppDispatcher = __webpack_require__(234);
+	var CONSTANTS = __webpack_require__(238);
 	
 	var _user = [];
 	
@@ -26549,7 +26439,7 @@
 	module.exports = UserStore;
 
 /***/ },
-/* 241 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26561,15 +26451,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(242);
-	module.exports.MapStore = __webpack_require__(245);
-	module.exports.Mixin = __webpack_require__(257);
-	module.exports.ReduceStore = __webpack_require__(246);
-	module.exports.Store = __webpack_require__(247);
+	module.exports.Container = __webpack_require__(241);
+	module.exports.MapStore = __webpack_require__(244);
+	module.exports.Mixin = __webpack_require__(256);
+	module.exports.ReduceStore = __webpack_require__(245);
+	module.exports.Store = __webpack_require__(246);
 
 
 /***/ },
-/* 242 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26591,10 +26481,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(243);
+	var FluxStoreGroup = __webpack_require__(242);
 	
-	var invariant = __webpack_require__(238);
-	var shallowEqual = __webpack_require__(244);
+	var invariant = __webpack_require__(237);
+	var shallowEqual = __webpack_require__(243);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -26752,7 +26642,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 243 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26771,7 +26661,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(237);
 	
 	/**
 	 * FluxStoreGroup allows you to execute a callback on every dispatch after
@@ -26833,7 +26723,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 244 */
+/* 243 */
 /***/ function(module, exports) {
 
 	/**
@@ -26888,7 +26778,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 245 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26909,10 +26799,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(246);
-	var Immutable = __webpack_require__(256);
+	var FluxReduceStore = __webpack_require__(245);
+	var Immutable = __webpack_require__(255);
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(237);
 	
 	/**
 	 * This is a simple store. It allows caching key value pairs. An implementation
@@ -27038,7 +26928,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 246 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27059,10 +26949,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(247);
+	var FluxStore = __webpack_require__(246);
 	
-	var abstractMethod = __webpack_require__(255);
-	var invariant = __webpack_require__(238);
+	var abstractMethod = __webpack_require__(254);
+	var invariant = __webpack_require__(237);
 	
 	var FluxReduceStore = (function (_FluxStore) {
 	  _inherits(FluxReduceStore, _FluxStore);
@@ -27145,7 +27035,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 247 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27164,11 +27054,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(248);
+	var _require = __webpack_require__(247);
 	
 	var EventEmitter = _require.EventEmitter;
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(237);
 	
 	/**
 	 * This class should be extended by the stores in your application, like so:
@@ -27328,7 +27218,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 248 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27341,14 +27231,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(249)
+	  EventEmitter: __webpack_require__(248)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 249 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27367,11 +27257,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(250);
-	var EventSubscriptionVendor = __webpack_require__(252);
+	var EmitterSubscription = __webpack_require__(249);
+	var EventSubscriptionVendor = __webpack_require__(251);
 	
-	var emptyFunction = __webpack_require__(254);
-	var invariant = __webpack_require__(253);
+	var emptyFunction = __webpack_require__(253);
+	var invariant = __webpack_require__(252);
 	
 	/**
 	 * @class BaseEventEmitter
@@ -27545,7 +27435,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 250 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27566,7 +27456,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(251);
+	var EventSubscription = __webpack_require__(250);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -27598,7 +27488,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 251 */
+/* 250 */
 /***/ function(module, exports) {
 
 	/**
@@ -27652,7 +27542,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 252 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27671,7 +27561,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(253);
+	var invariant = __webpack_require__(252);
 	
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -27761,7 +27651,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 253 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27816,7 +27706,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 254 */
+/* 253 */
 /***/ function(module, exports) {
 
 	/**
@@ -27858,7 +27748,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 255 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27875,7 +27765,7 @@
 	
 	'use strict';
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(237);
 	
 	function abstractMethod(className, methodName) {
 	   true ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Subclasses of %s must override %s() with their own implementation.', className, methodName) : invariant(false) : undefined;
@@ -27885,7 +27775,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 256 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32869,7 +32759,7 @@
 	}));
 
 /***/ },
-/* 257 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -32886,9 +32776,9 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(243);
+	var FluxStoreGroup = __webpack_require__(242);
 	
-	var invariant = __webpack_require__(238);
+	var invariant = __webpack_require__(237);
 	
 	/**
 	 * `FluxContainer` should be preferred over this mixin, but it requires using
@@ -32992,13 +32882,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 258 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var UserStore = __webpack_require__(240);
-	var ApiUtil = __webpack_require__(233);
-	var LinkedStateMixin = __webpack_require__(259);
+	var UserStore = __webpack_require__(239);
+	var ApiUtil = __webpack_require__(232);
+	var LinkedStateMixin = __webpack_require__(258);
 	var withRouter = __webpack_require__(168).withRouter;
 	
 	var cur = window.current_user_id;
@@ -33064,13 +32954,13 @@
 	module.exports = withRouter(Nav);
 
 /***/ },
-/* 259 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(260);
+	module.exports = __webpack_require__(259);
 
 /***/ },
-/* 260 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33086,8 +32976,8 @@
 	
 	'use strict';
 	
-	var ReactLink = __webpack_require__(261);
-	var ReactStateSetters = __webpack_require__(262);
+	var ReactLink = __webpack_require__(260);
+	var ReactStateSetters = __webpack_require__(261);
 	
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -33110,7 +33000,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 261 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33183,7 +33073,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 262 */
+/* 261 */
 /***/ function(module, exports) {
 
 	/**
@@ -33290,6 +33180,116 @@
 	};
 	
 	module.exports = ReactStateSetters;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiUtil = __webpack_require__(232);
+	var UserStore = __webpack_require__(239);
+	var Nav = __webpack_require__(257);
+	var React = __webpack_require__(1);
+	var LinkedStateMixin = __webpack_require__(258);
+	
+	var cur = window.current_user_id;
+	
+	var User = React.createClass({
+	  displayName: "User",
+	
+	
+	  mixins: [LinkedStateMixin],
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function () {
+	    return { items: [], inputValue: "" };
+	  },
+	
+	  componentWillMount: function () {
+	    ApiUtil.fetchUser(cur);
+	
+	    this.listener = UserStore.addListener(function () {
+	      this.setState({ items: UserStore.all() });
+	    }.bind(this));
+	
+	    const script1 = document.createElement("script");
+	    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
+	    script1.async = true;
+	    document.body.appendChild(script1);
+	
+	    const script2 = document.createElement("script");
+	    script2.type = "text/javascript";
+	    script2.src = "javascript.js";
+	    script2.async = true;
+	    document.body.appendChild(script2);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
+	  },
+	
+	  handleCreate: function (e) {
+	    e.preventDefault();
+	    ApiUtil.createItem(this.state.inputValue);
+	    this.setState({ inputValue: "" });
+	  },
+	
+	  handleDelete: function (id) {
+	    ApiUtil.finishItem(id);
+	  },
+	
+	  onChange: function (e) {
+	    this.setState({ inputValue: e.target.value });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(Nav, { key: "9999" }),
+	      React.createElement(
+	        "ol",
+	        null,
+	        this.state.items.map(function (item, idx) {
+	          if (item.body !== null) {
+	            return React.createElement(
+	              "li",
+	              { key: item.item_rank, id: item.item_id },
+	              React.createElement(
+	                "p",
+	                { className: "todo-text" },
+	                item.body
+	              ),
+	              React.createElement(
+	                "p",
+	                { className: "complete",
+	                  onClick: this.handleDelete.bind(null, item.item_id) },
+	                "Mark Complete"
+	              )
+	            );
+	          }
+	        }.bind(this))
+	      ),
+	      React.createElement(
+	        "form",
+	        { onSubmit: this.handleCreate },
+	        React.createElement("input", { type: "text",
+	          maxLength: "25",
+	          className: "",
+	          placeholder: "Add New Item Here",
+	          value: this.state.inputValue,
+	          onChange: this.onChange
+	        })
+	      )
+	    );
+	  }
+	});
+	
+	window.User = User;
+	
+	module.exports = User;
 
 /***/ }
 /******/ ]);

@@ -50,7 +50,7 @@ var Completed = React.createClass({
   render: function () {
     return (
       <div>
-        <Nav key="9999"></Nav>  
+        <Nav key="9999"></Nav>
         <div className="heading">
           <img src="images/Trophy.png" />
           <p>
