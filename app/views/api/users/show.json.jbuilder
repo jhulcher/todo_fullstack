@@ -18,6 +18,6 @@ else
     json.body item.item_body
     json.item_rank item.rank
     json.finished_yet item.finished
-    json.updated_at item.updated_at.to_time.strftime('%B %e at %l:%M %p')(hours=-7)
+    json.updated_at item.updated_at.to_time.strftime('%B %e at %l:%M %p')
   end
 end
