@@ -74,13 +74,12 @@
 	var Routes = React.createElement(
 	  Route,
 	  { path: "/", component: App },
-	  React.createElement(IndexRoute, { component: User }),
-	  React.createElement(Route, { path: "completed", component: Completed })
+	  React.createElement(IndexRoute, { component: User })
 	);
 	
 	ReactDom.render(React.createElement(
 	  Router,
-	  { history: ReactRouter.hashHistory },
+	  { history: ReactRouter.browserHistory },
 	  Routes
 	), document.getElementById("root"));
 
@@ -32912,13 +32911,11 @@
 	  },
 	
 	  handleUserClick: function () {
-	    // e.preventDefault();
-	    this.props.router.push("completed");
+	    ApiUtil.fetchCompleted(cur);
 	  },
 	
 	  handleListClick: function () {
-	    // e.preventDefault();
-	    this.props.router.push("/");
+	    ApiUtil.fetchUser();
 	  },
 	
 	  render: function () {
@@ -33190,6 +33187,8 @@
 	var Nav = __webpack_require__(257);
 	var React = __webpack_require__(1);
 	var LinkedStateMixin = __webpack_require__(258);
+	var Incomplete = __webpack_require__(263);
+	var Complete = __webpack_require__(264);
 	
 	var cur = window.current_user_id;
 	
@@ -33236,10 +33235,6 @@
 	    this.setState({ inputValue: "" });
 	  },
 	
-	  handleDelete: function (id) {
-	    ApiUtil.finishItem(id);
-	  },
-	
 	  onChange: function (e) {
 	    this.setState({ inputValue: e.target.value });
 	  },
@@ -33253,22 +33248,79 @@
 	        "ol",
 	        null,
 	        this.state.items.map(function (item, idx) {
-	          if (item.body !== null) {
+	          if (item.item_id === null && item.amount_incomplete === 0) {
 	            return React.createElement(
-	              "li",
-	              { key: item.item_rank, id: item.item_id },
+	              "div",
+	              { key: item.item_rank, className: "list-shift" },
 	              React.createElement(
-	                "p",
-	                { className: "todo-text" },
-	                item.body
-	              ),
-	              React.createElement(
-	                "p",
-	                { className: "complete",
-	                  onClick: this.handleDelete.bind(null, item.item_id) },
-	                "Mark Complete"
+	                "div",
+	                { className: "heading" },
+	                React.createElement(
+	                  "p",
+	                  null,
+	                  "You have no tasks to complete."
+	                ),
+	                React.createElement(
+	                  "p",
+	                  null,
+	                  "Create tasks below!"
+	                )
 	              )
 	            );
+	          } else if (item.item_id === null && item.amount_complete === 0) {
+	            return React.createElement(
+	              "div",
+	              { key: idx, className: "list-shift" },
+	              React.createElement(
+	                "div",
+	                { className: "heading" },
+	                React.createElement("img", { src: "images/Trophy.png" }),
+	                React.createElement(
+	                  "p",
+	                  null,
+	                  "You have completed 0 tasks."
+	                ),
+	                React.createElement(
+	                  "p",
+	                  null,
+	                  "Create tasks below!"
+	                )
+	              )
+	            );
+	          }
+	          if (item.finished_yet !== false) {
+	            console.log("true");
+	            if (idx === 0) {
+	              if (item.body !== null) {
+	                return React.createElement(
+	                  "div",
+	                  { key: idx, className: "list-shift" },
+	                  React.createElement(
+	                    "div",
+	                    { className: "heading" },
+	                    React.createElement("img", { src: "images/Trophy.png" }),
+	                    React.createElement(
+	                      "p",
+	                      null,
+	                      "You have completed ",
+	                      this.state.items.length,
+	                      " tasks!"
+	                    )
+	                  ),
+	                  React.createElement(Complete, { key: item.item_rank + 1, item: item })
+	                );
+	              }
+	            } else {
+	              return React.createElement(
+	                "div",
+	                { className: "list-shift", key: item.item_rank + 1 },
+	                React.createElement(Complete, { className: "list-shift", item: item })
+	              );
+	            }
+	          } else {
+	            if (item.body !== null) {
+	              return React.createElement(Incomplete, { key: item.item_rank, item: item });
+	            }
 	          }
 	        }.bind(this))
 	      ),
@@ -33290,6 +33342,121 @@
 	window.User = User;
 	
 	module.exports = User;
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiUtil = __webpack_require__(232);
+	var UserStore = __webpack_require__(239);
+	var Nav = __webpack_require__(257);
+	var React = __webpack_require__(1);
+	var LinkedStateMixin = __webpack_require__(258);
+	
+	var cur = window.current_user_id;
+	
+	var Incomplete = React.createClass({
+	  displayName: "Incomplete",
+	
+	
+	  handleDelete: function (id) {
+	    ApiUtil.finishItem(id);
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "li",
+	      { key: this.props.item.item_rank, id: this.props.item.item_id },
+	      React.createElement(
+	        "p",
+	        { className: "todo-text" },
+	        this.props.item.body
+	      ),
+	      React.createElement(
+	        "p",
+	        { className: "complete",
+	          onClick: this.handleDelete.bind(null, this.props.item.item_id) },
+	        "Mark Complete"
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Incomplete;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var ApiUtil = __webpack_require__(232);
+	var UserStore = __webpack_require__(239);
+	var Nav = __webpack_require__(257);
+	var React = __webpack_require__(1);
+	var LinkedStateMixin = __webpack_require__(258);
+	
+	var cur = window.current_user_id;
+	
+	var Complete = React.createClass({
+	  displayName: "Complete",
+	
+	
+	  handleUnfinish: function (id) {
+	    ApiUtil.unfinishItem(id);
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      { className: "completed-item",
+	        key: this.props.item.item_rank, id: this.props.item.item_id
+	      },
+	      React.createElement(
+	        "div",
+	        { className: "screw1" },
+	        "+"
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "screw2" },
+	        "+"
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "screw3" },
+	        "+"
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "screw4" },
+	        "+"
+	      ),
+	      React.createElement(
+	        "p",
+	        { className: "item-body" },
+	        this.props.item.body
+	      ),
+	      React.createElement(
+	        "div",
+	        {
+	          className: "completed"
+	        },
+	        "Completed on ",
+	        this.props.item.updated_at
+	      ),
+	      React.createElement(
+	        "div",
+	        {
+	          className: "delete",
+	          onClick: this.handleUnfinish.bind(null, this.props.item.item_id) },
+	        "Mark Incomplete"
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Complete;
 
 /***/ }
 /******/ ]);

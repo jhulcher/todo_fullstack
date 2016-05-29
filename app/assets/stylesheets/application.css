@@ -97,6 +97,10 @@ div {
   margin-bottom: 0px;
 }
 
+.list-shift {
+  padding: 0px 40px 0px 0px;
+}
+
 .item-body {
   padding: 6px 0px 6px 0px;
 }

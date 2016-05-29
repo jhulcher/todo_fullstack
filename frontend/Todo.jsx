@@ -26,11 +26,10 @@ var App = React.createClass({
 var Routes = (
   <Route path="/" component={ App }>
     <IndexRoute component={ User } />
-    <Route path="completed" component={ Completed } />
   </Route>
 );
 
 ReactDom.render(
-  <Router history={ ReactRouter.hashHistory }>{ Routes }</Router>,
+  <Router history={ ReactRouter.browserHistory }>{ Routes }</Router>,
   document.getElementById("root")
 );

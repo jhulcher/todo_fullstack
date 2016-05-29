@@ -23,13 +23,11 @@ var Nav = React.createClass({
   },
 
   handleUserClick: function () {
-    // e.preventDefault();
-    this.props.router.push("completed");
+    ApiUtil.fetchCompleted(cur);
   },
 
   handleListClick: function () {
-    // e.preventDefault();
-    this.props.router.push("/");
+    ApiUtil.fetchUser();
   },
 
   render: function () {

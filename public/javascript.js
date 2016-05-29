@@ -13,7 +13,10 @@ jQuery(function ($) {
           arr.push(parseInt(this.id, 10));
         }
       });
-      ApiUtil.changeRank(1, arr);
+
+      if (arr.length > 0) {
+        ApiUtil.changeRank(arr[0], arr);
+      }
 
     }, 1000);
   });

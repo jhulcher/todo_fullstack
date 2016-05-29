@@ -3,6 +3,8 @@ var UserStore = require("../stores/user.js");
 var Nav = require("./nav.jsx");
 var React = require("react");
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
+var Incomplete = require("./incomplete.jsx");
+var Complete = require("./complete.jsx");
 
 var cur = window.current_user_id;
 
@@ -49,10 +51,6 @@ var User = React.createClass({
     this.setState({inputValue: ""});
   },
 
-  handleDelete: function (id) {
-    ApiUtil.finishItem(id);
-  },
-
   onChange: function (e) {
     this.setState({inputValue: e.target.value});
   },
@@ -64,20 +62,63 @@ var User = React.createClass({
         <ol>
         {
           this.state.items.map (function (item, idx) {
-            if (item.body !== null) {
+            if (item.item_id === null && item.amount_incomplete === 0) {
               return (
-                <li key={ item.item_rank } id={ item.item_id }>
-                  <p className="todo-text">
-                    { item.body }
-                  </p>
-                  <p className="complete"
-                     onClick={this.handleDelete.bind(
-                        null,
-                        item.item_id)}>
-                    Mark Complete
-                  </p>
-                </li>
-              );
+                <div key={item.item_rank} className="list-shift">
+                  <div className="heading">
+                    <p>
+                      You have no tasks to complete.
+                    </p>
+                    <p>
+                      Create tasks below!
+                    </p>
+                  </div>
+                </div>
+              )
+            } else if (item.item_id === null && item.amount_complete === 0) {
+              return (
+                <div key={idx} className="list-shift">
+                  <div className="heading">
+                    <img src="images/Trophy.png" />
+                    <p>
+                      You have completed 0 tasks.
+                    </p>
+                    <p>
+                      Create tasks below!
+                    </p>
+                  </div>
+                </div>
+              )
+            }
+            if (item.finished_yet !== false) {
+              console.log("true");
+              if (idx === 0) {
+                if (item.body !== null) {
+                  return (
+                    <div key={idx} className="list-shift">
+                      <div className="heading">
+                        <img src="images/Trophy.png" />
+                        <p>
+                          You have completed { this.state.items.length } tasks!
+                        </p>
+                      </div>
+                      <Complete key={item.item_rank + 1} item={item}></Complete>
+                    </div>
+                  )
+                }
+              } else {
+                return (
+                  <div className="list-shift" key={item.item_rank + 1}>
+                    <Complete className="list-shift" item={item}></Complete>
+                  </div>
+                )
+              }
+            } else {
+              if (item.body !== null) {
+                return (
+                  <Incomplete key={item.item_rank} item={item}></Incomplete>
+                )
+              }
             }
           }.bind(this))
         }

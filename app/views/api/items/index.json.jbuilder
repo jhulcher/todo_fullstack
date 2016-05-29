@@ -1,6 +1,8 @@
 if @items.length == 0
   json.username current_user.username
   json.user_id current_user.id
+  json.amount_complete current_user.items.where({finished: true}).count
+  json.amount_incomplete current_user.items.where({finished: false}).count
   json.item_id nil
   json.body nil
   json.item_rank nil
