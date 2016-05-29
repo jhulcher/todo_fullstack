@@ -1,7 +1,5 @@
 var path = require("path");
 
-var InlineEnviromentVariablesPlugin = require('inline-environment-variables-webpack-plugin');
-
 module.exports = {
   context: __dirname,
   entry: "./frontend/Todo.jsx",
@@ -11,9 +9,6 @@ module.exports = {
     devtoolModuleFilenameTemplate: '[resourcePath]',
     devtoolFallbackModuleFilenameTemplate: '[resourcePath]?[hash]'
   },
-  plugins: [
-    new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' });
-  ],
   module: {
     loaders: [
       {

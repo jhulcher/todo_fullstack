@@ -24,6 +24,7 @@ var Incomplete = React.createClass({
               this.props.item.item_id)}>
           Mark Complete
         </p>
+        <div className="pagepeel"/>
       </li>
     )
   }

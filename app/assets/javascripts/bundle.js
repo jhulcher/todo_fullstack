@@ -33259,11 +33259,6 @@
 	                  "p",
 	                  null,
 	                  "You have no tasks to complete."
-	                ),
-	                React.createElement(
-	                  "p",
-	                  null,
-	                  "Create tasks below!"
 	                )
 	              )
 	            );
@@ -33279,17 +33274,11 @@
 	                  "p",
 	                  null,
 	                  "You have completed 0 tasks."
-	                ),
-	                React.createElement(
-	                  "p",
-	                  null,
-	                  "Create tasks below!"
 	                )
 	              )
 	            );
 	          }
 	          if (item.finished_yet !== false) {
-	            console.log("true");
 	            if (idx === 0) {
 	              if (item.body !== null) {
 	                return React.createElement(
@@ -33323,6 +33312,11 @@
 	            }
 	          }
 	        }.bind(this))
+	      ),
+	      React.createElement(
+	        "p",
+	        { className: "create" },
+	        "Create tasks below!"
 	      ),
 	      React.createElement(
 	        "form",
@@ -33377,7 +33371,8 @@
 	        { className: "complete",
 	          onClick: this.handleDelete.bind(null, this.props.item.item_id) },
 	        "Mark Complete"
-	      )
+	      ),
+	      React.createElement("div", { className: "pagepeel" })
 	    );
 	  }
 	

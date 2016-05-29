@@ -69,9 +69,6 @@ var User = React.createClass({
                     <p>
                       You have no tasks to complete.
                     </p>
-                    <p>
-                      Create tasks below!
-                    </p>
                   </div>
                 </div>
               )
@@ -83,15 +80,11 @@ var User = React.createClass({
                     <p>
                       You have completed 0 tasks.
                     </p>
-                    <p>
-                      Create tasks below!
-                    </p>
                   </div>
                 </div>
               )
             }
             if (item.finished_yet !== false) {
-              console.log("true");
               if (idx === 0) {
                 if (item.body !== null) {
                   return (
@@ -123,6 +116,9 @@ var User = React.createClass({
           }.bind(this))
         }
         </ol>
+        <p className="create">
+          Create tasks below!
+        </p>
         <form onSubmit={this.handleCreate}>
           <input type="text"
                  maxLength="25"
