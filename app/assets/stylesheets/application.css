@@ -87,7 +87,8 @@ li:before {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 25px;
+  padding: 10px 0px 0px 0px;
+  height: 5px;
   width: 175px;
   box-shadow: 0 5px 5px -5px grey;
 }
@@ -97,7 +98,8 @@ li:before {
   top: 0;
   right: 0;
   height: 165px;
-  width: 25px;
+  padding: 0px 0px 0px 15px;
+  width: 1px;
   box-shadow: 5px 0 5px -5px grey;
 }
 
