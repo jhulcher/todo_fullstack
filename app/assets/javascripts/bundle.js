@@ -25985,6 +25985,23 @@
 	    });
 	  },
 	
+	  deleteItem: function (id) {
+	    $.ajax({
+	      url: "api/items/" + id,
+	      method: "DELETE",
+	      dataType: "json",
+	      data: {
+	        item: {
+	          item_id: id
+	        }
+	      },
+	      success: function (response) {
+	        ApiActions.receiveUser(response);
+	        UserStore.all();
+	      }
+	    });
+	  },
+	
 	  finishItem: function (id) {
 	    $.ajax({
 	      url: "api/items/" + id,
@@ -33357,6 +33374,10 @@
 	    ApiUtil.finishItem(id);
 	  },
 	
+	  handleDestroy: function (id) {
+	    ApiUtil.deleteItem(id);
+	  },
+	
 	  render: function () {
 	    return React.createElement(
 	      "li",
@@ -33368,10 +33389,18 @@
 	      ),
 	      React.createElement(
 	        "p",
+	        { className: "destroy",
+	          onClick: this.handleDestroy.bind(null, this.props.item.item_id) },
+	        "×"
+	      ),
+	      React.createElement(
+	        "p",
 	        { className: "complete",
 	          onClick: this.handleDelete.bind(null, this.props.item.item_id) },
 	        "Mark Complete"
 	      ),
+	      React.createElement("div", { className: "bottom-shadow" }),
+	      React.createElement("div", { className: "right-shadow" }),
 	      React.createElement("div", { className: "pagepeel" })
 	    );
 	  }

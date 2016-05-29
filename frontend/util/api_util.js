@@ -44,6 +44,23 @@ var ApiUtil = {
     });
   },
 
+  deleteItem: function (id) {
+    $.ajax({
+      url: "api/items/" + id,
+      method: "DELETE",
+      dataType: "json",
+      data: {
+        item: {
+          item_id: id
+        }
+      },
+      success: function (response) {
+        ApiActions.receiveUser(response);
+        UserStore.all();
+      }
+    });
+  },
+
   finishItem: function (id) {
     $.ajax({
       url: "api/items/" + id,

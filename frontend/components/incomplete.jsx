@@ -12,11 +12,21 @@ var Incomplete = React.createClass({
     ApiUtil.finishItem(id);
   },
 
+  handleDestroy: function (id) {
+    ApiUtil.deleteItem(id);
+  },
+
   render: function () {
     return (
       <li key={ this.props.item.item_rank } id={ this.props.item.item_id }>
         <p className="todo-text">
           { this.props.item.body }
+        </p>
+        <p className="destroy"
+          onClick={this.handleDestroy.bind(
+          null,
+          this.props.item.item_id)}>
+          ×
         </p>
         <p className="complete"
            onClick={this.handleDelete.bind(
@@ -24,6 +34,10 @@ var Incomplete = React.createClass({
               this.props.item.item_id)}>
           Mark Complete
         </p>
+        <div className="bottom-shadow">
+        </div>
+        <div className="right-shadow">
+        </div>
         <div className="pagepeel"/>
       </li>
     )
