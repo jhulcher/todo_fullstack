@@ -12,7 +12,7 @@ module.exports = {
     devtoolFallbackModuleFilenameTemplate: '[resourcePath]?[hash]'
   },
   plugins: [
-    new InlineEnviromentVariablesPlugin()
+    new InlineEnviromentVariablesPlugin({ NODE_ENV: 'production' });
   ],
   module: {
     loaders: [
