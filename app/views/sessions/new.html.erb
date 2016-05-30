@@ -1,32 +1,42 @@
+<div class="outer">
+  <div class="splash">
+    <p class="title">
+      Prioritizer
+    </p>
+    <p class="tagline">
+      Rearrange your day!
+    </p>
+    <form action="<%= session_url %>" method="post">
+      <%= auth_token_input %>
+      <input type="text"
+              name="user[username]"
+              class="login-text"
+              placeholder='Username'
+              value="">
+      <div class="bottom_pad"></div>
+      <input type="password"
+               name="user[password]"
+               placeholder='Password'
+               value=""
+               class="login-text">
+      <div class="bottom_pad"></div>
+      <input type="submit"
+             value="Sign In"
+             class="login" />
+    </form>
 
-<p>
-  Already a Member?
-</p>
+    <p class="account-status">
+      Don't have an account?
+    </p>
 
-<form action="<%= session_url %>" method="post">
-  <%= auth_token_input %>
-    <input type="text"
-            name="user[username]"
-            class="login_username"
-            placeholder='Username'
-            value="">
-    <div class="bottom_pad"></div>
-    <input type="password"
-             name="user[password]"
-             placeholder='Password'
-             value=""
-             class="bottom_pad">
-    <div class="bottom_pad"></div>
-    <input type="submit" value="Sign In!" class="login" >
-    <div class="bottom_pad"></div>
-    <div class="bottom_pad"></div>
-    <div class="bottom_pad"></div>
-    <div class="bottom_pad"></div>
-</form>
+    <div class="sign-up">
+      <%= link_to "Sign Up!", new_user_url, method: :get %>
+    </div>
 
-<p>
-  Need to Sign Up?
-</p>
-<div>
-  <%= link_to "Sign Up!", new_user_url, method: :get %>
+    <div class="bottom-shadow-splash">
+    </div>
+    <div class="right-shadow-splash">
+    </div>
+    <div class="pagepeel-splash"/>
+  </div>
 </div>
