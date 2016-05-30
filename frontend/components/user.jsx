@@ -59,12 +59,12 @@ var User = React.createClass({
     return (
       <div>
         <Nav key="9999"></Nav>
-        <ol>
+        <ol className="list-shift">
         {
           this.state.items.map (function (item, idx) {
             if (item.item_id === null && item.amount_incomplete === 0) {
               return (
-                <div key={item.item_rank} className="list-shift">
+                <div key={item.item_rank} className="">
                   <div className="heading">
                     <p>
                       You have no tasks to complete.
@@ -74,7 +74,7 @@ var User = React.createClass({
               )
             } else if (item.item_id === null && item.amount_complete === 0) {
               return (
-                <div key={idx} className="list-shift">
+                <div key={idx} className="placard-shift">
                   <div className="heading">
                     <img src="images/Trophy.png" />
                     <p>
@@ -88,7 +88,7 @@ var User = React.createClass({
               if (idx === 0) {
                 if (item.body !== null) {
                   return (
-                    <div key={idx} className="list-shift">
+                    <div key={idx} className="placard-shift">
                       <div className="heading">
                         <img src="images/Trophy.png" />
                         <p>
@@ -101,8 +101,8 @@ var User = React.createClass({
                 }
               } else {
                 return (
-                  <div className="list-shift" key={item.item_rank + 1}>
-                    <Complete className="list-shift" item={item}></Complete>
+                  <div className="placard-shift" key={item.item_rank + 1}>
+                    <Complete className="" item={item}></Complete>
                   </div>
                 )
               }
@@ -116,18 +116,20 @@ var User = React.createClass({
           }.bind(this))
         }
         </ol>
-        <p className="create">
-          Create tasks below!
-        </p>
-        <form onSubmit={this.handleCreate}>
-          <input type="text"
-                 maxLength="25"
-                 className=""
-                 placeholder="Add New Item Here"
-                 value={this.state.inputValue}
-                 onChange={this.onChange}
-                 />
-        </form>
+        <div className="drop-form">
+          <p className="create">
+            Add New Task
+          </p>
+          <form onSubmit={this.handleCreate}>
+            <input type="text"
+                   maxLength="25"
+                   className=""
+                   placeholder="Add New Item Here"
+                   value={this.state.inputValue}
+                   onChange={this.onChange}
+                   />
+          </form>
+        </div>
       </div>
     );
   }

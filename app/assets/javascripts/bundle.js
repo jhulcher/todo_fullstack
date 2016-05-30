@@ -33263,12 +33263,12 @@
 	      React.createElement(Nav, { key: "9999" }),
 	      React.createElement(
 	        "ol",
-	        null,
+	        { className: "list-shift" },
 	        this.state.items.map(function (item, idx) {
 	          if (item.item_id === null && item.amount_incomplete === 0) {
 	            return React.createElement(
 	              "div",
-	              { key: item.item_rank, className: "list-shift" },
+	              { key: item.item_rank, className: "" },
 	              React.createElement(
 	                "div",
 	                { className: "heading" },
@@ -33282,7 +33282,7 @@
 	          } else if (item.item_id === null && item.amount_complete === 0) {
 	            return React.createElement(
 	              "div",
-	              { key: idx, className: "list-shift" },
+	              { key: idx, className: "placard-shift" },
 	              React.createElement(
 	                "div",
 	                { className: "heading" },
@@ -33300,7 +33300,7 @@
 	              if (item.body !== null) {
 	                return React.createElement(
 	                  "div",
-	                  { key: idx, className: "list-shift" },
+	                  { key: idx, className: "placard-shift" },
 	                  React.createElement(
 	                    "div",
 	                    { className: "heading" },
@@ -33319,8 +33319,8 @@
 	            } else {
 	              return React.createElement(
 	                "div",
-	                { className: "list-shift", key: item.item_rank + 1 },
-	                React.createElement(Complete, { className: "list-shift", item: item })
+	                { className: "placard-shift", key: item.item_rank + 1 },
+	                React.createElement(Complete, { className: "", item: item })
 	              );
 	            }
 	          } else {
@@ -33331,20 +33331,24 @@
 	        }.bind(this))
 	      ),
 	      React.createElement(
-	        "p",
-	        { className: "create" },
-	        "Create tasks below!"
-	      ),
-	      React.createElement(
-	        "form",
-	        { onSubmit: this.handleCreate },
-	        React.createElement("input", { type: "text",
-	          maxLength: "25",
-	          className: "",
-	          placeholder: "Add New Item Here",
-	          value: this.state.inputValue,
-	          onChange: this.onChange
-	        })
+	        "div",
+	        { className: "drop-form" },
+	        React.createElement(
+	          "p",
+	          { className: "create" },
+	          "Add New Task"
+	        ),
+	        React.createElement(
+	          "form",
+	          { onSubmit: this.handleCreate },
+	          React.createElement("input", { type: "text",
+	            maxLength: "25",
+	            className: "",
+	            placeholder: "Add New Item Here",
+	            value: this.state.inputValue,
+	            onChange: this.onChange
+	          })
+	        )
 	      )
 	    );
 	  }

@@ -23,12 +23,33 @@ body {
   margin: 0px;
 }
 
+button {
+  cursor: pointer;
+}
+
+span {
+  margin: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+div {
+  padding: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
 ol {
   list-style: none;
+  width: 60%;
+  display: table;   /* Allow the centering to work */
+  margin: 0 auto;
+  /*display: inline;*/
 }
 
 p {
   font-size: 25px;
+  padding: 0px 0px 0px 0px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
@@ -48,11 +69,15 @@ li {
   height: 190px;
   /*box-shadow: 2px 2px 2px #ebebeb;*/
   counter-increment: item;
-  margin: 0px 0px 15px 0px;
+  margin: 30px 15px 0px 15px;
   /*padding: 0px 0px 15px 0px;*/
   font-weight: bold;
-  margin-right: 56px;
+  /*margin-right: 56px;*/
   text-align: center;
+
+  /*float: left;*/
+  display: inline-block;
+  /*float: none;*/
 
   text-shadow: 0px;
   position: relative;
@@ -71,16 +96,17 @@ li:before {
   margin-top: 15px;
   margin-bottom: 0px;
   content: counter(item);
-  /*background: white;*/
   border-radius: 100%;
   border-width: 0px;
   border-style: solid;
-  /*border-color: #e6e6e6;*/
   color: black;
-  /*width: 1.3em;*/
-  /*text-align: center;*/
   display: inline-block;
   font-weight: normal;
+}
+
+.drop-form {
+  margin: 30px 0px 0px 0px;
+  /*display: table-footer-group;*/
 }
 
 .bottom-shadow {
@@ -90,7 +116,7 @@ li:before {
   padding: 10px 0px 0px 0px;
   height: 5px;
   width: 175px;
-  box-shadow: 0 5px 5px -5px grey;
+  box-shadow: 0 5px 5px -5px #bfbfbf;
 }
 
 .right-shadow {
@@ -100,7 +126,7 @@ li:before {
   height: 165px;
   padding: 0px 0px 0px 15px;
   width: 1px;
-  box-shadow: 5px 0 5px -5px grey;
+  box-shadow: 5px 0 5px -5px #bfbfbf;
 }
 
 .pagepeel {
@@ -119,41 +145,35 @@ li:before {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffc421', endColorstr='#ffffff', GradientType=1 );
 }
 
-button {
-  cursor: pointer;
-}
-
-span {
-  margin: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-div {
-  padding: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-
 .list-shift {
-  padding: 0px 40px 0px 0px;
-}
-
-.item-body {
   padding: 0px 0px 0px 0px;
 }
 
+.item-body {
+  padding: 10px 0px 3px 0px;
+}
+
 .todo-text {
+  position: absolute;
+  /*background-color: red;*/
   font-weight: normal;
+  /*height: 100px;*/
   /*vertical-align: center;*/
   /*bottom: 100px;*/
-  /*text-align: center;*/
-  padding: 40px 0px 0px 0px;
+  text-align: center;
+  width: 100%;
+  font-weight: normal;
+  padding: 45px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
   /*position: absolute;*/
   /*align: center;*/
   /*bottom: 0;*/
   /*text-shadow: black .5px .5px;*/
   font-family: montserrat;
+}
+
+.placard-shift {
+  padding: 0px 0px 0px 0px;
 }
 
 .create {
@@ -162,7 +182,7 @@ div {
 }
 
 .destroy {
-  color: #cccccc;
+  color: #bfbfbf;
   padding: 8px 14px 0px 0px;
   cursor: pointer;
   font-size: 20px;
@@ -190,6 +210,7 @@ div {
   font-size: 14px;
   padding: 0px 0px 17px 50px;
   bottom: 0;
+  color: grey;
   align: center;
   /*color: white;*/
   font-weight: lighter;
@@ -197,6 +218,7 @@ div {
 }
 
 .complete:hover {
+  color: black;
   text-decoration: underline;
 }
 
@@ -349,7 +371,8 @@ div {
 }
 
 .heading {
-  padding-top: 15px;
+  /*font-style: italic;*/
+  padding: 30px 0px 20px 0px;
   font-weight: lighter;
   font-size: 20px;
 }
