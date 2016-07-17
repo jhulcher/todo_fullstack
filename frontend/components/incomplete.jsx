@@ -8,6 +8,33 @@ var cur = window.current_user_id;
 
 var Incomplete = React.createClass({
 
+  getInitialState: function () {
+    return (
+        { text: "" }
+    );
+  },
+
+  componentWillMount: function () {
+    // Split up words that are tool long if text is longer than 9 chr's
+    if (this.props.item.body.length > 10) {
+      var words = (this.props.item.body).split(" ");
+      var new_words = [];
+      words.map(function (word) {
+        if (word.length > 10) {
+          var str1 = word.substring(0,(word.length / 2)) + "-\n";
+          var str2 = word.substring((word.length / 2),(word.length));
+          new_words.push(str1 + str2);
+        } else {
+          new_words.push(word);
+        }
+      });
+      this.setState({ text: new_words.join(" ") });
+    } else {
+      // Don't bother iterating if text isn't long enough
+      this.setState({ text: this.props.item.body });
+    }
+  },
+
   handleDelete: function (id) {
     ApiUtil.finishItem(id);
   },
@@ -20,7 +47,7 @@ var Incomplete = React.createClass({
     return (
       <li key={ this.props.item.item_rank } id={ this.props.item.item_id }>
         <p className="todo-text">
-          { this.props.item.body }
+          { this.state.text }
         </p>
         <p className="destroy"
           onClick={this.handleDestroy.bind(

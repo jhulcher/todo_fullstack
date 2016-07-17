@@ -1,7 +1,6 @@
 var React = require("react");
 var ReactDom = require("react-dom");
 var ReactRouter = require("react-router");
-var Completed = require("./components/completed.jsx");
 
 var User = require("./components/user.jsx");
 

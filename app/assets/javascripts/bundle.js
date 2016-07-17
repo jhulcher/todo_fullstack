@@ -47,9 +47,8 @@
 	var React = __webpack_require__(1);
 	var ReactDom = __webpack_require__(33);
 	var ReactRouter = __webpack_require__(168);
-	var Completed = __webpack_require__(231);
 	
-	var User = __webpack_require__(262);
+	var User = __webpack_require__(231);
 	
 	var ApiUtil = __webpack_require__(232);
 	
@@ -25815,11 +25814,13 @@
 	var Nav = __webpack_require__(257);
 	var React = __webpack_require__(1);
 	var LinkedStateMixin = __webpack_require__(258);
+	var Incomplete = __webpack_require__(262);
+	var Complete = __webpack_require__(263);
 	
 	var cur = window.current_user_id;
 	
-	var Completed = React.createClass({
-	  displayName: "Completed",
+	var User = React.createClass({
+	  displayName: "User",
 	
 	
 	  mixins: [LinkedStateMixin],
@@ -25829,11 +25830,11 @@
 	  },
 	
 	  getInitialState: function () {
-	    return { items: [] };
+	    return { items: [], inputValue: "" };
 	  },
 	
 	  componentWillMount: function () {
-	    ApiUtil.fetchCompleted(cur);
+	    ApiUtil.fetchUser(cur);
 	
 	    this.listener = UserStore.addListener(function () {
 	      this.setState({ items: UserStore.all() });
@@ -25855,8 +25856,14 @@
 	    this.listener.remove();
 	  },
 	
-	  handleUnfinish: function (id) {
-	    ApiUtil.unfinishItem(id);
+	  handleCreate: function (e) {
+	    e.preventDefault();
+	    ApiUtil.createItem(this.state.inputValue);
+	    this.setState({ inputValue: "" });
+	  },
+	
+	  onChange: function (e) {
+	    this.setState({ inputValue: e.target.value });
 	  },
 	
 	  render: function () {
@@ -25865,75 +25872,101 @@
 	      null,
 	      React.createElement(Nav, { key: "9999" }),
 	      React.createElement(
+	        "ol",
+	        { className: "list-shift" },
+	        this.state.items.map(function (item, idx) {
+	          if (item.item_id === null && item.amount_incomplete === 0) {
+	            return React.createElement(
+	              "div",
+	              { key: item.item_rank, className: "" },
+	              React.createElement(
+	                "div",
+	                { className: "heading" },
+	                React.createElement(
+	                  "p",
+	                  null,
+	                  "You have no tasks to complete."
+	                )
+	              )
+	            );
+	          } else if (item.item_id === null && item.amount_complete === 0) {
+	            return React.createElement(
+	              "div",
+	              { key: idx, className: "placard-shift" },
+	              React.createElement(
+	                "div",
+	                { className: "heading" },
+	                React.createElement("img", { src: "images/Trophy.png" }),
+	                React.createElement(
+	                  "p",
+	                  null,
+	                  "You have completed 0 tasks."
+	                )
+	              )
+	            );
+	          }
+	          if (item.finished_yet !== false) {
+	            if (idx === 0) {
+	              if (item.body !== null) {
+	                return React.createElement(
+	                  "div",
+	                  { key: idx, className: "placard-shift" },
+	                  React.createElement(
+	                    "div",
+	                    { className: "heading" },
+	                    React.createElement("img", { src: "images/Trophy.png" }),
+	                    React.createElement(
+	                      "p",
+	                      null,
+	                      "You have completed ",
+	                      this.state.items.length,
+	                      " tasks!"
+	                    )
+	                  ),
+	                  React.createElement(Complete, { key: item.item_rank + 1, item: item })
+	                );
+	              }
+	            } else {
+	              return React.createElement(
+	                "div",
+	                { className: "placard-shift", key: item.item_rank + 1 },
+	                React.createElement(Complete, { className: "", item: item })
+	              );
+	            }
+	          } else {
+	            if (item.body !== null) {
+	              return React.createElement(Incomplete, { key: item.item_rank, item: item });
+	            }
+	          }
+	        }.bind(this))
+	      ),
+	      React.createElement(
 	        "div",
-	        { className: "heading" },
-	        React.createElement("img", { src: "images/Trophy.png" }),
+	        { className: "drop-form" },
 	        React.createElement(
 	          "p",
-	          null,
-	          "Youve completed ",
-	          this.state.items.length,
-	          " tasks!"
+	          { className: "create" },
+	          "Add New Task"
+	        ),
+	        React.createElement(
+	          "form",
+	          { onSubmit: this.handleCreate },
+	          React.createElement("input", { type: "text",
+	            maxLength: "20",
+	            className: "",
+	            placeholder: "Add New Item Here",
+	            value: this.state.inputValue,
+	            onChange: this.onChange
+	          })
 	        )
-	      ),
-	      this.state.items.map(function (item, idx) {
-	        if (item.body !== null) {
-	          return React.createElement(
-	            "div",
-	            {
-	              className: "completed-item",
-	              key: idx,
-	              id: item.id
-	            },
-	            React.createElement(
-	              "div",
-	              { className: "screw1" },
-	              "+"
-	            ),
-	            React.createElement(
-	              "div",
-	              { className: "screw2" },
-	              "+"
-	            ),
-	            React.createElement(
-	              "div",
-	              { className: "screw3" },
-	              "+"
-	            ),
-	            React.createElement(
-	              "div",
-	              { className: "screw4" },
-	              "+"
-	            ),
-	            React.createElement(
-	              "p",
-	              { className: "item-body" },
-	              item.body
-	            ),
-	            React.createElement(
-	              "div",
-	              {
-	                className: "completed"
-	              },
-	              "Completed on ",
-	              item.updated_at
-	            ),
-	            React.createElement(
-	              "div",
-	              {
-	                className: "delete",
-	                onClick: this.handleUnfinish.bind(null, item.item_id) },
-	              "Mark Incomplete"
-	            )
-	          );
-	        }
-	      }.bind(this))
+	      )
 	    );
 	  }
-	
 	});
 	
-	module.exports = Completed;
+	window.User = User;
+	
+	module.exports = User;
 
 /***/ },
 /* 232 */
@@ -33204,175 +33237,37 @@
 	var Nav = __webpack_require__(257);
 	var React = __webpack_require__(1);
 	var LinkedStateMixin = __webpack_require__(258);
-	var Incomplete = __webpack_require__(263);
-	var Complete = __webpack_require__(264);
-	
-	var cur = window.current_user_id;
-	
-	var User = React.createClass({
-	  displayName: "User",
-	
-	
-	  mixins: [LinkedStateMixin],
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function () {
-	    return { items: [], inputValue: "" };
-	  },
-	
-	  componentWillMount: function () {
-	    ApiUtil.fetchUser(cur);
-	
-	    this.listener = UserStore.addListener(function () {
-	      this.setState({ items: UserStore.all() });
-	    }.bind(this));
-	
-	    const script1 = document.createElement("script");
-	    script1.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js";
-	    script1.async = true;
-	    document.body.appendChild(script1);
-	
-	    const script2 = document.createElement("script");
-	    script2.type = "text/javascript";
-	    script2.src = "javascript.js";
-	    script2.async = true;
-	    document.body.appendChild(script2);
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.listener.remove();
-	  },
-	
-	  handleCreate: function (e) {
-	    e.preventDefault();
-	    ApiUtil.createItem(this.state.inputValue);
-	    this.setState({ inputValue: "" });
-	  },
-	
-	  onChange: function (e) {
-	    this.setState({ inputValue: e.target.value });
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      "div",
-	      null,
-	      React.createElement(Nav, { key: "9999" }),
-	      React.createElement(
-	        "ol",
-	        { className: "list-shift" },
-	        this.state.items.map(function (item, idx) {
-	          if (item.item_id === null && item.amount_incomplete === 0) {
-	            return React.createElement(
-	              "div",
-	              { key: item.item_rank, className: "" },
-	              React.createElement(
-	                "div",
-	                { className: "heading" },
-	                React.createElement(
-	                  "p",
-	                  null,
-	                  "You have no tasks to complete."
-	                )
-	              )
-	            );
-	          } else if (item.item_id === null && item.amount_complete === 0) {
-	            return React.createElement(
-	              "div",
-	              { key: idx, className: "placard-shift" },
-	              React.createElement(
-	                "div",
-	                { className: "heading" },
-	                React.createElement("img", { src: "images/Trophy.png" }),
-	                React.createElement(
-	                  "p",
-	                  null,
-	                  "You have completed 0 tasks."
-	                )
-	              )
-	            );
-	          }
-	          if (item.finished_yet !== false) {
-	            if (idx === 0) {
-	              if (item.body !== null) {
-	                return React.createElement(
-	                  "div",
-	                  { key: idx, className: "placard-shift" },
-	                  React.createElement(
-	                    "div",
-	                    { className: "heading" },
-	                    React.createElement("img", { src: "images/Trophy.png" }),
-	                    React.createElement(
-	                      "p",
-	                      null,
-	                      "You have completed ",
-	                      this.state.items.length,
-	                      " tasks!"
-	                    )
-	                  ),
-	                  React.createElement(Complete, { key: item.item_rank + 1, item: item })
-	                );
-	              }
-	            } else {
-	              return React.createElement(
-	                "div",
-	                { className: "placard-shift", key: item.item_rank + 1 },
-	                React.createElement(Complete, { className: "", item: item })
-	              );
-	            }
-	          } else {
-	            if (item.body !== null) {
-	              return React.createElement(Incomplete, { key: item.item_rank, item: item });
-	            }
-	          }
-	        }.bind(this))
-	      ),
-	      React.createElement(
-	        "div",
-	        { className: "drop-form" },
-	        React.createElement(
-	          "p",
-	          { className: "create" },
-	          "Add New Task"
-	        ),
-	        React.createElement(
-	          "form",
-	          { onSubmit: this.handleCreate },
-	          React.createElement("input", { type: "text",
-	            maxLength: "25",
-	            className: "",
-	            placeholder: "Add New Item Here",
-	            value: this.state.inputValue,
-	            onChange: this.onChange
-	          })
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	window.User = User;
-	
-	module.exports = User;
-
-/***/ },
-/* 263 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var ApiUtil = __webpack_require__(232);
-	var UserStore = __webpack_require__(239);
-	var Nav = __webpack_require__(257);
-	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(258);
 	
 	var cur = window.current_user_id;
 	
 	var Incomplete = React.createClass({
 	  displayName: "Incomplete",
 	
+	
+	  getInitialState: function () {
+	    return { text: "" };
+	  },
+	
+	  componentWillMount: function () {
+	    // Split up words that are tool long if text is longer than 9 chr's
+	    if (this.props.item.body.length > 10) {
+	      var words = this.props.item.body.split(" ");
+	      var new_words = [];
+	      words.map(function (word) {
+	        if (word.length > 10) {
+	          var str1 = word.substring(0, word.length / 2) + "-\n";
+	          var str2 = word.substring(word.length / 2, word.length);
+	          new_words.push(str1 + str2);
+	        } else {
+	          new_words.push(word);
+	        }
+	      });
+	      this.setState({ text: new_words.join(" ") });
+	    } else {
+	      // Don't bother iterating if text isn't long enough
+	      this.setState({ text: this.props.item.body });
+	    }
+	  },
 	
 	  handleDelete: function (id) {
 	    ApiUtil.finishItem(id);
@@ -33389,7 +33284,7 @@
 	      React.createElement(
 	        "p",
 	        { className: "todo-text" },
-	        this.props.item.body
+	        this.state.text
 	      ),
 	      React.createElement(
 	        "p",
@@ -33414,7 +33309,7 @@
 	module.exports = Incomplete;
 
 /***/ },
-/* 264 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ApiUtil = __webpack_require__(232);

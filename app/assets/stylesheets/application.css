@@ -177,10 +177,13 @@ li:before {
 }
 
 .item-body {
+  font-size: 20px;
+  font-weight: bold;
   padding: 10px 0px 3px 0px;
 }
 
 .todo-text {
+  font-size: 20px;
   position: absolute;
   font-weight: normal;
   text-align: center;

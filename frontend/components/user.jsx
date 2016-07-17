@@ -122,7 +122,7 @@ var User = React.createClass({
           </p>
           <form onSubmit={this.handleCreate}>
             <input type="text"
-                   maxLength="25"
+                   maxLength="20"
                    className=""
                    placeholder="Add New Item Here"
                    value={this.state.inputValue}
