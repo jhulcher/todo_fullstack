@@ -21,7 +21,7 @@ class Api::ItemsController < ApplicationController
   end
 
   def update
-
+    # If update involves Re-Ranking
     if params[:item][:rank].is_a?(Array)
       @items = []
       # Query database for User's highest item rank, only one time
@@ -36,34 +36,35 @@ class Api::ItemsController < ApplicationController
           @items.push(@item)
         end
       end
+      #return new set of items
       @items
-    end
+      # If Update involves marking Item as complete or incomplete
+    else
+      @item = Item.find(params[:id])
+      # Make sure items belong to current_user before updating
+      if params[:item][:finished] && @item.user_id == current_user.id
+        @item.finished = params[:item][:finished]
 
-    @item = Item.find(params[:id])
-
-    if params[:item][:finished] && @item.user_id = current_user.id
-      @item.finished = params[:item][:finished]
-
-      if @item.finished
-        @item.save!
-        #return new set of items
-        @items = current_user.items.where(finished: false).sort_by { |x| x.rank }
-      else
-        # If Item is marked un-finished again, it's re-ranked as the lowest priority
-        @item.rank = Item.where("user_id = #{current_user.id}").maximum("rank") + 1
-        @item.save!
-        #return new set of items
-        @items = current_user.items.where(finished: true)
-        @items = @items.sort_by { |x| x.updated_at }.reverse
+        if @item.finished
+          @item.save!
+          #return new set of items
+          @items = current_user.items.where(finished: false).sort_by { |x| x.rank }
+        else
+          # If Item is marked un-finished, it's re-ranked as the lowest priority
+          @item.rank = Item.where("user_id = #{current_user.id}").maximum("rank") + 1
+          @item.save!
+          #return new set of items
+          items = current_user.items.where(finished: true)
+          @items = items.sort_by { |x| x.updated_at }.reverse
+        end
       end
     end
-
   end
 
   def destroy
     @item = Item.find(params[:id])
     @item.destroy!
-    # return unfinished Items without the recently deleted Item
+    # return unfinished Items, now minus the recently deleted Item
     @items = current_user.items.where(finished: false).sort_by { |x| x.rank }
   end
 

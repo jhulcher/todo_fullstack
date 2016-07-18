@@ -15,13 +15,14 @@ var Incomplete = React.createClass({
   },
 
   componentWillMount: function () {
-    // Split up words that are tool long if text is longer than 9 chr's
+    // Split up words that are too long if String is longer than 10 chr's
     if (this.props.item.body.length > 10) {
       var words = (this.props.item.body).split(" ");
       var new_words = [];
+      // Break up individual words that are too long
       words.map(function (word) {
         if (word.length > 10) {
-          var str1 = word.substring(0,(word.length / 2)) + "-\n";
+          var str1 = word.substring(0,(word.length / 2)) + "- ";
           var str2 = word.substring((word.length / 2),(word.length));
           new_words.push(str1 + str2);
         } else {
