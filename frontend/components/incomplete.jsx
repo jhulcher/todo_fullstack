@@ -19,19 +19,21 @@ var Incomplete = React.createClass({
     if (this.props.item.body.length > 10) {
       var words = (this.props.item.body).split(" ");
       var new_words = [];
-      // Break up individual words that are too long
+
       words.map(function (word) {
+        // Break up individual words that are too long
         if (word.length > 10) {
           var str1 = word.substring(0,(word.length / 2)) + "- ";
           var str2 = word.substring((word.length / 2),(word.length));
           new_words.push(str1 + str2);
+        // Leave word as is if it's not too long
         } else {
           new_words.push(word);
         }
       });
       this.setState({ text: new_words.join(" ") });
+    // Don't iterate or truncate words if full string isn't long enough
     } else {
-      // Don't bother iterating if text isn't long enough
       this.setState({ text: this.props.item.body });
     }
   },

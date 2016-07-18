@@ -57,6 +57,7 @@ class Api::ItemsController < ApplicationController
           items = current_user.items.where(finished: true)
           @items = items.sort_by { |x| x.updated_at }.reverse
         end
+        
       end
     end
   end
